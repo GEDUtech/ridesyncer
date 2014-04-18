@@ -1,6 +1,6 @@
 RideSyncer
 ==========
 
-* [Website](www.ridesyncer.com)
-* [Facebook](www.facebook.com/ridesyncer)
-* [Twitter](www.twitter.com/ridesyncer)
+* [Website](http://www.ridesyncer.com)
+* [Facebook](http://www.facebook.com/ridesyncer)
+* [Twitter](http://www.twitter.com/ridesyncer)

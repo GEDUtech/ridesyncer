@@ -1,7 +1,9 @@
+
 import org.json.simple.JSONObject;
 import java.util.ArrayList;
-        
+
 public class User {
+
     long id;
     String username;
     String password;
@@ -13,15 +15,15 @@ public class User {
     boolean emailVerified;
     String verificationCode;
     ArrayList<Schedule> schedules;
-	
+
     public User() {
         schedules = new ArrayList<Schedule>();
     }
-    
-    public static User fromJSON(JSONObject obj) throws JSONException{
-	
+
+    public static User fromJSON(JSONObject obj) throws JSONException {
+
         User user = new User();
-		
+
         user.id = obj.getLong("Id");
         user.username = obj.getString("UserName");
         user.firstName = obj.getString("FirstName");
@@ -36,7 +38,7 @@ public class User {
 
     }
 
-    public JSONObject toJSON(){
+    public JSONObject toJSON() {
 
         JSONObject obj = new JSONObject();
 
@@ -51,5 +53,5 @@ public class User {
         obj.put("Token", this.token);
 //	  obj.put("CreatedAt", this.created);
         return obj;
-    } 
+    }
 }

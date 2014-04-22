@@ -7,61 +7,53 @@ import org.json.JSONObject;
 
 public class User {
 
-    long id;
-    String username;
-    String password;
-    String firstName;
-    String lastName;
-    String email;
-    String token;
-    String ride;
-    boolean emailVerified;
-    String verificationCode;
-    ArrayList<Schedule> schedules;
+	long id;
+	String username;
+	String password;
+	String firstName;
+	String lastName;
+	String email;
+	String token;
+	String ride;
+	boolean emailVerified;
+	ArrayList<Schedule> schedules;
 
-    public User() {
-        schedules = new ArrayList<Schedule>();
-    }
+	public User() {
+		schedules = new ArrayList<Schedule>();
+	}
 
-    public JSONObject toJSON() throws JSONException{
-        JSONObject obj = new JSONObject();
+	public JSONObject toJSON() throws JSONException {
+		JSONObject obj = new JSONObject();
 
-        obj.put("Username", this.username);
-        obj.put("Password", this.password);
-        obj.put("FirstName", this.firstName);
-        obj.put("LastName", this.lastName);
-        obj.put("Email", this.email);
-        obj.put("EmailVerified", this.emailVerified);
-        obj.put("VerificationCode", this.verificationCode);
-        obj.put("Ride", this.ride);
-        obj.put("Token", this.token);
-//	  obj.put("CreatedAt", this.created);
-        return obj;
-    }
+		obj.put("Username", this.username);
+		obj.put("Password", this.password);
+		obj.put("FirstName", this.firstName);
+		obj.put("LastName", this.lastName);
+		obj.put("Email", this.email);
+		obj.put("EmailVerified", this.emailVerified);
+		obj.put("Ride", this.ride);
+		obj.put("Token", this.token);
 
-    public static User fromJSON(JSONObject obj) throws JSONException {
-        User user = new User();
+		return obj;
+	}
 
-        user.id = obj.getLong("Id");
-        user.username = obj.getString("UserName");
-        user.firstName = obj.getString("FirstName");
-        user.lastName = obj.getString("LastName");
-        user.email = obj.getString("Email");
-        user.emailVerified = obj.getBoolean("EmailVerified");
-        user.verificationCode = obj.getString("VerificationCode");
-        user.ride = obj.getString("Ride");
-        user.token = obj.getString("Token");
-//        user.created = obj.getString("Created");
-        return user;
+	public static User fromJSON(JSONObject obj) throws JSONException {
+		User user = new User();
 
-    }
+		user.id = obj.getLong("Id");
+		user.username = obj.getString("Username");
+		user.firstName = obj.getString("FirstName");
+		user.lastName = obj.getString("LastName");
+		user.email = obj.getString("Email");
+		user.emailVerified = obj.getBoolean("EmailVerified");
+		user.ride = obj.getString("Ride");
+		user.token = obj.getString("Token");
+
+		return user;
+	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
@@ -108,10 +100,6 @@ public class User {
 		return token;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
-	}
-
 	public String getRide() {
 		return ride;
 	}
@@ -122,18 +110,6 @@ public class User {
 
 	public boolean isEmailVerified() {
 		return emailVerified;
-	}
-
-	public void setEmailVerified(boolean emailVerified) {
-		this.emailVerified = emailVerified;
-	}
-
-	public String getVerificationCode() {
-		return verificationCode;
-	}
-
-	public void setVerificationCode(String verificationCode) {
-		this.verificationCode = verificationCode;
 	}
 
 	public ArrayList<Schedule> getSchedules() {

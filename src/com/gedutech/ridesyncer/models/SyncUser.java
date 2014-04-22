@@ -5,36 +5,32 @@ import org.json.JSONObject;
 
 public class SyncUser {
 
-    long id;
-    long syncId;
-    long userId;
+	long id;
+	long syncId;
+	long userId;
 
-    public JSONObject toJSON() throws JSONException{
-        JSONObject obj = new JSONObject();
+	public JSONObject toJSON() throws JSONException {
+		JSONObject obj = new JSONObject();
 
-        obj.put("Id", this.id);
-        obj.put("SyncId", this.syncId);
-        obj.put("UserId", this.userId);
+		obj.put("Id", this.id);
+		obj.put("SyncId", this.syncId);
+		obj.put("UserId", this.userId);
 
-        return obj;
-    }
+		return obj;
+	}
 
-    public static SyncUser fromJSON(JSONObject obj) throws JSONException {
-        SyncUser syncUser = new SyncUser();
+	public static SyncUser fromJSON(JSONObject obj) throws JSONException {
+		SyncUser syncUser = new SyncUser();
 
-        syncUser.id = obj.getLong("Id");
-        syncUser.syncId = obj.getLong("SyncId");
-        syncUser.userId = obj.getLong("UserId");
+		syncUser.id = obj.getLong("Id");
+		syncUser.syncId = obj.getLong("SyncId");
+		syncUser.userId = obj.getLong("UserId");
 
-        return syncUser;
-    }
+		return syncUser;
+	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public long getSyncId() {

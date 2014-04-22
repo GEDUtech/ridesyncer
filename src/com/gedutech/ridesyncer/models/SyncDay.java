@@ -26,7 +26,7 @@ public class SyncDay {
 		obj.put("Weekday", this.weekday);
 		obj.put("Status", this.status);
 		obj.put("Order", this.order);
-		// obj.put("Created", this.createdAt);
+
 		return obj;
 	}
 
@@ -40,17 +40,12 @@ public class SyncDay {
 		syncDay.weekday = obj.getInt("Weekday");
 		syncDay.status = obj.getInt("Status");
 		syncDay.order = obj.getInt("Order");
-		// syncDay.createdAt = obj.getDate("Created");
 
 		return syncDay;
 	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public long getDriverId() {
@@ -103,10 +98,6 @@ public class SyncDay {
 
 	public Date getCreatedAt() {
 		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
 	}
 
 }

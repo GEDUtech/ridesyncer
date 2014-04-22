@@ -25,7 +25,7 @@ public class ApiResult {
 		this.contentType = contentType;
 		this.raw = raw;
 
-		if (contentType.equals("application/json")) {
+		if (contentType.startsWith("application/json")) {
 			try {
 				this.data = new JSONObject(raw);
 			} catch (JSONException e) {

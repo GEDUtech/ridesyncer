@@ -1,8 +1,102 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gedutech.ridesyncer.RegisterActivity"
-    tools:ignore="MergeRootFrame" />
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.gedutech.ridesyncer.RegisterActivity" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/etfFName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/etfFName"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/etfLName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/etfLName"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/etfEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/etfEmailAddress"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/etfUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/etfUsername" />
+
+        <EditText
+            android:id="@+id/pwtfPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pwtfPassword"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/pwtfRepeatPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pwtfRepeatPassword"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/etfStreet1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/etfStreet1" />
+
+        <EditText
+            android:id="@+id/etfStreet2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/etfStreet2" />
+
+        <EditText
+            android:id="@+id/etfCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/etfCity" />
+
+        <EditText
+            android:id="@+id/etfState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/etfState" />
+
+        <EditText
+            android:id="@+id/etfZip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/etfZip" />
+
+        <EditText
+            android:id="@+id/etfRide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/etfRide"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnRegister" />
+    </LinearLayout>
+
+</ScrollView>

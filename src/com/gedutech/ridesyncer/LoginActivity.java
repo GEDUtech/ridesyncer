@@ -1,6 +1,15 @@
 package com.gedutech.ridesyncer;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.gedutech.ridesyncer.api.ApiResult;
 import com.gedutech.ridesyncer.api.UsersApi;
@@ -10,7 +19,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -56,10 +68,13 @@ public class LoginActivity extends Activity {
 	private TextView mLoginStatusMessageView;
 
 	private UsersApi usersApi;
+	private SharedPreferences pref;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		pref = getApplicationContext().getSharedPreferences("RideSyncer", Context.MODE_PRIVATE);
 
 		usersApi = new UsersApi("");
 		setContentView(R.layout.activity_login);
@@ -91,6 +106,30 @@ public class LoginActivity extends Activity {
 				attemptLogin();
 			}
 		});
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+		if (pref.getBoolean("isLoggedIn", false)) {
+			try {
+				InputStream inputStream = openFileInput("appdata.dat");
+				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+				StringBuilder stringBuilder = new StringBuilder();
+
+				String buffer;
+				while ((buffer = bufferedReader.readLine()) != null) {
+					stringBuilder.append(buffer);
+				}
+
+				User user = User.fromJSON(new JSONObject(stringBuilder.toString()));
+				login(user);
+			} catch (Exception e) {
+				Log.d("RideSyncer", e.getMessage());
+			}
+		}
 	}
 
 	/**
@@ -182,6 +221,37 @@ public class LoginActivity extends Activity {
 		}
 	}
 
+	private void login(User user) {
+		FileOutputStream outputStream;
+
+		try {
+			outputStream = openFileOutput("appdata.dat", Context.MODE_PRIVATE);
+			outputStream.write(user.toJSON().toString().getBytes());
+			outputStream.close();
+		} catch (Exception e) {
+			Log.d("RideSyncer", "login Exception: " + e.getMessage());
+			return;
+		}
+
+		Editor editor = pref.edit();
+
+		editor.putBoolean("isLoggedIn", true);
+		editor.putString("token", user.getToken());
+		editor.commit();
+
+		Intent intent = new Intent();
+		if (user.isEmailVerified()) {
+			intent.setClass(this, MainActivity.class);
+		} else {
+			intent.setClass(this, VerifyAccountActivity.class);
+		}
+
+		intent.putExtra("authUser", user);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		finish();
+	}
+
 	/**
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
@@ -189,7 +259,15 @@ public class LoginActivity extends Activity {
 	public class UserLoginTask extends AsyncTask<Void, Void, ApiResult> {
 		@Override
 		protected ApiResult doInBackground(Void... params) {
-			return usersApi.login(mEmail, mPassword);
+			ApiResult apiResult = null;
+			try {
+				apiResult = usersApi.login(mEmail, mPassword);
+			} catch (JSONException e) {
+				Log.d("RideSyncer", e.getMessage());
+				cancel(true);
+				Toast.makeText(LoginActivity.this, "Unexpected Problem", Toast.LENGTH_LONG).show();
+			}
+			return apiResult;
 		}
 
 		@Override
@@ -197,36 +275,20 @@ public class LoginActivity extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 
-			if (apiResult == null) {
-				Toast.makeText(LoginActivity.this, "Check Internet Connection", Toast.LENGTH_LONG).show();
-				return;
-			}
-
 			if (apiResult.isSuccess()) {
 				try {
 					User user = User.fromJSON(apiResult.getData());
-					if (user.isEmailVerified()) {
-						Intent i = new Intent(LoginActivity.this, MainActivity.class);
-						i.putExtra("authUser", user);
-						startActivity(i);
-						finish();
-						Toast.makeText(LoginActivity.this, "Email is verified", Toast.LENGTH_LONG).show();
-					} else {
-						Intent i = new Intent(LoginActivity.this, VerifyAccountActivity.class);
-						i.putExtra("authUser", user);
-						startActivity(i);
-						finish();
-						Toast.makeText(LoginActivity.this, "Email is NOT verified", Toast.LENGTH_LONG).show();
-					}
+					login(user);
 				} catch (JSONException e) {
 					Toast.makeText(LoginActivity.this, "Unexpected Problem", Toast.LENGTH_LONG).show();
-					Log.d("ridesyncer", e.getMessage());
-					Log.d("ridesyncer", apiResult.getRaw());
+					Log.d("RideSyncer", e.getMessage());
 					return;
 				}
 			} else if (apiResult.isUnauthorized()) {
 				mPasswordView.setError(getString(R.string.error_incorrect_password));
 				mPasswordView.requestFocus();
+			} else if (apiResult.isNetworkError()) {
+				Toast.makeText(LoginActivity.this, "Check Internet Connection", Toast.LENGTH_LONG).show();
 			} else {
 				Toast.makeText(LoginActivity.this, "Unexpected Problem", Toast.LENGTH_LONG).show();
 			}

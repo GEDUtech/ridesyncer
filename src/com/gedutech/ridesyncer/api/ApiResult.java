@@ -9,6 +9,8 @@ public class ApiResult {
 
 	protected String contentType;
 
+	protected String charset;
+
 	protected int statusCode;
 
 	protected String raw;
@@ -20,12 +22,19 @@ public class ApiResult {
 		this.raw = "";
 	}
 
-	public ApiResult(int statusCode, String contentType, String raw) {
+	public ApiResult(int statusCode, String contentTypeHeader, String raw) {
 		this.statusCode = statusCode;
-		this.contentType = contentType;
 		this.raw = raw;
 
-		if (contentType.startsWith("application/json")) {
+		String[] contentTypeParts = contentTypeHeader.split(";");
+		if (contentTypeParts.length > 0) {
+			this.contentType = contentTypeParts[0];
+		}
+		if (contentTypeParts.length > 1) {
+			this.charset = contentTypeParts[1].replace(" charset=", "");
+		}
+
+		if (contentType.equals("application/json")) {
 			try {
 				this.data = new JSONObject(raw);
 			} catch (JSONException e) {
@@ -35,26 +44,30 @@ public class ApiResult {
 	}
 
 	public int getStatusCode() {
-		return this.statusCode;
+		return statusCode;
 	}
 
 	public String getRaw() {
-		return this.raw;
+		return raw;
 	}
 
 	public JSONObject getData() {
-		return this.data;
+		return data;
 	}
 
 	public boolean isSuccess() {
-		return this.statusCode == 200;
+		return statusCode == 200;
 	}
 
 	public boolean isUnauthorized() {
-		return this.statusCode == 401;
+		return statusCode == 401;
 	}
 
 	public boolean isServerError() {
 		return statusCode >= 500;
+	}
+
+	public boolean isNetworkError() {
+		return statusCode == 0;
 	}
 }

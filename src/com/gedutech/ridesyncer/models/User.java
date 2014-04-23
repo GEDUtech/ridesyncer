@@ -1,21 +1,28 @@
 package com.gedutech.ridesyncer.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	long id;
 	String username;
 	String password;
+	String repeatPassword;
 	String firstName;
 	String lastName;
 	String email;
 	String token;
 	String ride;
 	boolean emailVerified;
+	boolean tos;
+
 	ArrayList<Schedule> schedules;
 
 	public User() {
@@ -25,8 +32,10 @@ public class User {
 	public JSONObject toJSON() throws JSONException {
 		JSONObject obj = new JSONObject();
 
+		obj.put("Id", this.id);
 		obj.put("Username", this.username);
 		obj.put("Password", this.password);
+		obj.put("RepeatPassword", this.repeatPassword);
 		obj.put("FirstName", this.firstName);
 		obj.put("LastName", this.lastName);
 		obj.put("Email", this.email);
@@ -49,6 +58,13 @@ public class User {
 		user.ride = obj.getString("Ride");
 		user.token = obj.getString("Token");
 
+		JSONArray schedulesArray = obj.optJSONArray("Schedules");
+		if (schedulesArray != null) {
+			for (int i = 0; i < schedulesArray.length(); i++) {
+				user.schedules.add(Schedule.fromJSON(schedulesArray.getJSONObject(i)));
+			}
+		}
+
 		return user;
 	}
 
@@ -70,6 +86,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRepeatPassword() {
+		return repeatPassword;
+	}
+
+	public void setRepeatPassword(String repeatPassword) {
+		this.repeatPassword = repeatPassword;
 	}
 
 	public String getFirstName() {
@@ -110,6 +134,14 @@ public class User {
 
 	public boolean isEmailVerified() {
 		return emailVerified;
+	}
+
+	public boolean isTos() {
+		return tos;
+	}
+
+	public void setTos(boolean tos) {
+		this.tos = tos;
 	}
 
 	public ArrayList<Schedule> getSchedules() {

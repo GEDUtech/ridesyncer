@@ -27,11 +27,6 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
 
 		pref = getSharedPreferences("RideSyncer", Context.MODE_PRIVATE);
 
@@ -46,10 +41,10 @@ public class MainActivity extends Activity {
 		} catch (Exception e) {
 			startLoginActivity();
 		}
-		
+
 		checkAuthorization();
 	}
-	
+
 	protected void checkAuthorization() {
 		if (authUser == null) {
 			startLoginActivity();
@@ -57,7 +52,7 @@ public class MainActivity extends Activity {
 			startVerifyAccountActivity();
 		}
 	}
-	
+
 	protected void startVerifyAccountActivity() {
 		startActivity(new Intent(this, VerifyAccountActivity.class));
 		finish();

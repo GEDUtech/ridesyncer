@@ -52,7 +52,10 @@ public class User implements Serializable {
 		obj.put("City", this.city);
 		obj.put("State", this.state);
 		obj.put("Zip", this.zip);
-		obj.put("Distance", this.distance);
+
+		if (!Double.isNaN(this.distance)) {
+			obj.put("Distance", this.distance);
+		}
 
 		return obj;
 	}

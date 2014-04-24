@@ -26,4 +26,10 @@ public class UsersApi extends ApiBase {
 		return this.execute(this.post("/register"), user.toJSON());
 	}
 
+	public ApiResult verify(String verificationCode) throws JSONException {
+		JSONObject data = new JSONObject();
+		data.put("VerificationCode", verificationCode);
+		return this.execute(this.post("/verify"), data);
+	}
+
 }

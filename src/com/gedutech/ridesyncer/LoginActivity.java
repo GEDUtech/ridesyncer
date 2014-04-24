@@ -108,30 +108,6 @@ public class LoginActivity extends Activity {
 		});
 	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-
-		if (pref.getBoolean("isLoggedIn", false)) {
-			try {
-				InputStream inputStream = openFileInput("appdata.dat");
-				InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-				BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-				StringBuilder stringBuilder = new StringBuilder();
-
-				String buffer;
-				while ((buffer = bufferedReader.readLine()) != null) {
-					stringBuilder.append(buffer);
-				}
-
-				User user = User.fromJSON(new JSONObject(stringBuilder.toString()));
-				login(user);
-			} catch (Exception e) {
-				Log.d("RideSyncer", e.getMessage());
-			}
-		}
-	}
-
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
 	 * If there are form errors (invalid email, missing fields, etc.), the
@@ -222,12 +198,10 @@ public class LoginActivity extends Activity {
 	}
 
 	private void login(User user) {
-		FileOutputStream outputStream;
+		Session session = new Session(this);
 
 		try {
-			outputStream = openFileOutput("appdata.dat", Context.MODE_PRIVATE);
-			outputStream.write(user.toJSON().toString().getBytes());
-			outputStream.close();
+			session.write("authUser", user.toJSON());
 		} catch (Exception e) {
 			Log.d("RideSyncer", "login Exception: " + e.getMessage());
 			return;
@@ -245,9 +219,6 @@ public class LoginActivity extends Activity {
 		} else {
 			intent.setClass(this, VerifyAccountActivity.class);
 		}
-
-		intent.putExtra("authUser", user);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		finish();
 	}

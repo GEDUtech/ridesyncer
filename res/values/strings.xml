@@ -2,20 +2,22 @@
 <resources>
 
     <string name="app_name">RideSyncer</string>
-    <string name="title_activity_register">RegisterActivity</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_verify_account">VerifyAccountActivity</string>
     <string name="etfEmailAddress">Email Address</string>
-    <string name="etfUserName">User Name</string>
+    <string name="etfUsername">User Name</string>
     <string name="pwtfPassword">Password</string>
     <string name="pwtfRepeatPassword">Repeat Password</string>
-    <string name="etfName">Name</string>
-    <string name="etfAddress">Address</string>
-    <string name="etfDescription">Enter a description of you and your car.</string>
-    <string name="etfValidation">Enter Validation Code</string>
+    <string name="etfFName">First Name</string>
+    <string name="etfLName">Last Name</string>
+    <string name="etfStreet1">First street of cross street</string>
+    <string name="etfStreet2">Second street of cross street</string>
+    <string name="etfCity">City</string>
+    <string name="etfState">State</string>
+    <string name="etfZip">Zip Code</string>
+    <string name="etfRide">Enter a description of your car.</string>
+    <string name="etfValidation">Enter Verification Code</string>
     <string name="btnRegister">Register</string>
     <string name="btnLogin">Login</string>
-    <string name="btnValidate">Validate</string>
+    <string name="btnVerify">Verify</string>
 
 </resources>

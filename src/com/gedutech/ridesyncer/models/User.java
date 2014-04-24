@@ -20,6 +20,12 @@ public class User implements Serializable {
 	String email;
 	String token;
 	String ride;
+	String street;
+	String crossStreet;
+	String city;
+	String state;
+	String zip;
+	double distance;
 	boolean emailVerified;
 	boolean tos;
 
@@ -42,6 +48,12 @@ public class User implements Serializable {
 		obj.put("EmailVerified", this.emailVerified);
 		obj.put("Ride", this.ride);
 		obj.put("Token", this.token);
+		obj.put("Street", this.street);
+		obj.put("CrossStreet", this.crossStreet);
+		obj.put("City", this.city);
+		obj.put("State", this.state);
+		obj.put("Zip", this.zip);
+		obj.put("Distance", this.distance);
 
 		return obj;
 	}
@@ -57,6 +69,12 @@ public class User implements Serializable {
 		user.emailVerified = obj.getBoolean("EmailVerified");
 		user.ride = obj.getString("Ride");
 		user.token = obj.getString("Token");
+		user.street = obj.getString("Street");
+		user.crossStreet = obj.getString("CrossStreet");
+		user.city = obj.getString("City");
+		user.state = obj.getString("State");
+		user.zip = obj.getString("Zip");
+		user.distance = obj.optDouble("Distance");
 
 		JSONArray schedulesArray = obj.optJSONArray("Schedules");
 		if (schedulesArray != null) {

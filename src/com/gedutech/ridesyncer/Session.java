@@ -46,7 +46,7 @@ public class Session {
 			outputStream.write(data.getBytes());
 			outputStream.close();
 		} catch (Exception e) {
-			Log.d("RideSyncer", "login Exception: " + e.getMessage());
+			Log.d("RideSyncer", "SessionWrite: " + e.getMessage());
 			return false;
 		}
 		return true;

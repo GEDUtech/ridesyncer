@@ -20,8 +20,7 @@ public class User implements Serializable {
 	String email;
 	String token;
 	String ride;
-	String street;
-	String crossStreet;
+	String address;
 	String city;
 	String state;
 	String zip;
@@ -48,8 +47,7 @@ public class User implements Serializable {
 		obj.put("EmailVerified", this.emailVerified);
 		obj.put("Ride", this.ride);
 		obj.put("Token", this.token);
-		obj.put("Street", this.street);
-		obj.put("CrossStreet", this.crossStreet);
+		obj.put("Address", this.address);
 		obj.put("City", this.city);
 		obj.put("State", this.state);
 		obj.put("Zip", this.zip);
@@ -69,8 +67,7 @@ public class User implements Serializable {
 		user.emailVerified = obj.getBoolean("EmailVerified");
 		user.ride = obj.getString("Ride");
 		user.token = obj.getString("Token");
-		user.street = obj.getString("Street");
-		user.crossStreet = obj.getString("CrossStreet");
+		user.address = obj.getString("Address");
 		user.city = obj.getString("City");
 		user.state = obj.getString("State");
 		user.zip = obj.getString("Zip");
@@ -148,6 +145,46 @@ public class User implements Serializable {
 
 	public void setRide(String ride) {
 		this.ride = ride;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String street) {
+		this.address = street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
 	}
 
 	public boolean isEmailVerified() {

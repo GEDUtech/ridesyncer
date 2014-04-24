@@ -250,7 +250,7 @@ public class LoginActivity extends Activity {
 				try {
 					User user = User.fromJSON(apiResult.getData());
 					login(user);
-				} catch (JSONException e) {
+				} catch (Exception e) {
 					Toast.makeText(LoginActivity.this, "Unexpected Problem", Toast.LENGTH_LONG).show();
 					Log.d("RideSyncer", e.getMessage());
 					return;

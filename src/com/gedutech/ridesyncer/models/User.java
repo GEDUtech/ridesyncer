@@ -1,6 +1,7 @@
 package com.gedutech.ridesyncer.models;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -56,7 +57,7 @@ public class User implements Serializable {
 		return obj;
 	}
 
-	public static User fromJSON(JSONObject obj) throws JSONException {
+	public static User fromJSON(JSONObject obj) throws JSONException, ParseException {
 		User user = new User();
 
 		user.id = obj.getLong("Id");

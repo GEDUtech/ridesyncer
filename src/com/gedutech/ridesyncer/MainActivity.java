@@ -1,19 +1,15 @@
 package com.gedutech.ridesyncer;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.gedutech.ridesyncer.models.User;
 
 public class MainActivity extends Activity {
 
-	SharedPreferences pref;
-
-	User authUser;
-	Session session;
+	private User authUser;
+	private Session session;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -21,18 +17,17 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		pref = getSharedPreferences("RideSyncer", Context.MODE_PRIVATE);
+		session = new Session(this);
 
-		if (!pref.getBoolean("isLoggedIn", false)) {
+		if (!session.isLoggedIn()) {
 			startLoginActivity();
 			return;
 		}
 
-		session = new Session(this);
-		try {
-			authUser = User.fromJSON(session.readJSON("authUser"));
-		} catch (Exception e) {
+		authUser = session.getAuthUser();
+		if (authUser == null) {
 			startLoginActivity();
+			return;
 		}
 
 		checkAuthorization();

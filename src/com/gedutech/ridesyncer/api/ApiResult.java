@@ -59,6 +59,10 @@ public class ApiResult {
 		return statusCode == 200;
 	}
 
+	public boolean hasValidationErrors() {
+		return statusCode == 400;
+	}
+
 	public boolean isUnauthorized() {
 		return statusCode == 401;
 	}

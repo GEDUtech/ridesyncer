@@ -1,28 +1,12 @@
 package com.gedutech.ridesyncer;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.gedutech.ridesyncer.api.ApiResult;
-import com.gedutech.ridesyncer.api.UsersApi;
-import com.gedutech.ridesyncer.models.User;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +18,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gedutech.ridesyncer.api.ApiResult;
+import com.gedutech.ridesyncer.api.UsersApi;
+import com.gedutech.ridesyncer.models.User;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -68,13 +56,10 @@ public class LoginActivity extends Activity {
 	private TextView mLoginStatusMessageView;
 
 	private UsersApi usersApi;
-	private SharedPreferences pref;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		pref = getApplicationContext().getSharedPreferences("RideSyncer", Context.MODE_PRIVATE);
 
 		usersApi = new UsersApi("");
 		setContentView(R.layout.activity_login);
@@ -200,18 +185,9 @@ public class LoginActivity extends Activity {
 	private void login(User user) {
 		Session session = new Session(this);
 
-		try {
-			session.write("authUser", user.toJSON());
-		} catch (Exception e) {
-			Log.d("RideSyncer", "login Exception: " + e.getMessage());
+		if (!session.setAuthUser(user)) {
 			return;
 		}
-
-		Editor editor = pref.edit();
-
-		editor.putBoolean("isLoggedIn", true);
-		editor.putString("token", user.getToken());
-		editor.commit();
 
 		Intent intent = new Intent();
 		if (user.isEmailVerified()) {
@@ -219,6 +195,7 @@ public class LoginActivity extends Activity {
 		} else {
 			intent.setClass(this, VerifyAccountActivity.class);
 		}
+
 		startActivity(intent);
 		finish();
 	}

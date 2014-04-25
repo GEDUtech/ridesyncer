@@ -19,5 +19,8 @@
     <string name="btnRegister">Register</string>
     <string name="btnLogin">Login</string>
     <string name="btnVerify">Verify</string>
+    <string name="weekday">Weekday</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 
 </resources>

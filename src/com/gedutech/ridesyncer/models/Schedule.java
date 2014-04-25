@@ -1,15 +1,14 @@
 package com.gedutech.ridesyncer.models;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Schedule {
+import com.gedutech.ridesyncer.utils.TimeUtil;
 
-	protected static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'h:m:ssXXX");
+public class Schedule {
 
 	long id;
 	long userId;
@@ -24,8 +23,8 @@ public class Schedule {
 		obj.put("Id", this.id);
 		obj.put("UserId", this.userId);
 		obj.put("Weekday", this.weekday);
-		obj.put("Start", formatDate(this.start));
-		obj.put("End", formatDate(this.end));
+		obj.put("Start", TimeUtil.formatRFC3339(this.start));
+		obj.put("End", TimeUtil.formatRFC3339(this.end));
 		obj.put("Deleted", this.deletedAt);
 
 		return obj;
@@ -37,18 +36,10 @@ public class Schedule {
 		schedule.id = obj.getLong("Id");
 		schedule.userId = obj.getLong("UserId");
 		schedule.weekday = obj.getInt("Weekday");
-		schedule.start = parseDate(obj.getString("Start"));
-		schedule.end = parseDate(obj.getString("End"));
+		schedule.start = TimeUtil.parseRFC3339(obj.getString("Start"));
+		schedule.end = TimeUtil.parseRFC3339(obj.getString("End"));
 
 		return schedule;
-	}
-
-	protected static Date parseDate(String dateString) throws ParseException {
-		return dateFormat.parse(dateString);
-	}
-
-	protected static String formatDate(Date date) {
-		return dateFormat.format(date);
 	}
 
 	public long getId() {

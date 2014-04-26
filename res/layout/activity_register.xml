@@ -56,16 +56,10 @@
             android:inputType="textPassword" />
 
         <EditText
-            android:id="@+id/etfStreet1"
+            android:id="@+id/etfAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etfStreet1" />
-
-        <EditText
-            android:id="@+id/etfStreet2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/etfStreet2" />
+            android:hint="@string/etfAddress" />
 
         <EditText
             android:id="@+id/etfCity"

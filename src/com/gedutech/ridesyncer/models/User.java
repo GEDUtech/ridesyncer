@@ -191,6 +191,10 @@ public class User implements Serializable {
 		this.distance = distance;
 	}
 
+	public void setEmailVerified(boolean emailVerified) {
+		this.emailVerified = emailVerified;
+	}
+	
 	public boolean isEmailVerified() {
 		return emailVerified;
 	}

@@ -9,8 +9,7 @@
     <string name="pwtfRepeatPassword">Repeat Password</string>
     <string name="etfFName">First Name</string>
     <string name="etfLName">Last Name</string>
-    <string name="etfStreet1">First street of cross street</string>
-    <string name="etfStreet2">Second street of cross street</string>
+    <string name="etfAddress">Address</string>
     <string name="etfCity">City</string>
     <string name="etfState">State</string>
     <string name="etfZip">Zip Code</string>

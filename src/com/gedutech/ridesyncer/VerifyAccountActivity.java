@@ -78,7 +78,6 @@ public class VerifyAccountActivity extends Activity {
 			} catch (JSONException e) {
 				e.printStackTrace();
 				Toast.makeText(VerifyAccountActivity.this, "Unexpected Problem", Toast.LENGTH_LONG).show();
-				Log.d("RideSyncer", apiResult.getRaw());
 			}
 			return apiResult;
 		}

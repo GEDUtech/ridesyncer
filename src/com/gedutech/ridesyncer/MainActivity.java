@@ -22,7 +22,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		session = new Session(this);
+		session = Session.getInstance(this);
 
 		if (!session.isLoggedIn()) {
 			startLoginActivity();
@@ -88,7 +88,7 @@ public class MainActivity extends FragmentActivity {
 		public Fragment getItem(int position) {
 			switch (position) {
 			case 0:
-				return new SchedulesFragment(authUser);
+				return new SchedulesFragment();
 			}
 
 			return null;

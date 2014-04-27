@@ -17,14 +17,14 @@ public class SchedulesFragment extends Fragment {
 
 	private SchedulesAdapter adapter;
 	private User authUser;
-
-	public SchedulesFragment(User authUser) {
-		this.authUser = authUser;
-	}
+	private Session session;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		session = Session.getInstance(getActivity());
+		authUser = session.getAuthUser();
 
 		// TODO: Temporary, delete
 		// Begin remove

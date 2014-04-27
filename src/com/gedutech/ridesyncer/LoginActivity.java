@@ -183,9 +183,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void login(User user) {
-		Session session = new Session(this);
-
-		if (!session.setAuthUser(user)) {
+		if (!Session.getInstance(this).login(user)) {
 			return;
 		}
 

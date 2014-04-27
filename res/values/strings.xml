@@ -22,5 +22,6 @@
     <string name="weekday">Weekday</string>
     <string name="start">Start</string>
     <string name="end">End</string>
+    <string name="etfAddress">Address</string>
 
 </resources>

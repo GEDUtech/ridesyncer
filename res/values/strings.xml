@@ -21,10 +21,13 @@
     <string name="weekday">Weekday</string>
     <string name="start">Start</string>
     <string name="end">End</string>
-    <string name="InvalidEmail" R.string.eftInvalidEmail="Enter a valid .edu Email" android:id="etfInvalidEmail" android:layout_height="wrap_content" android:layout_width="wrap_content">Enter a valid .edu Email</string>
-    <string android:layout_height="wrap_content" android:id="InvalidPassword" android:layout_width="wrap_content" name="InvalidPassword">Password must be at least 6 characters</string>
-    <string android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="InvalidUsername" name="InvalidUsername">Username must be at least 6 characters</string>
-    <string android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="InvalidZip" name="InvalidZip">Zip code must be 5 numbers</string>
-    <string android:layout_height="wrap_content" android:id="PasswordsDontMatch" android:layout_width="wrap_content" name="PasswordsDontMatch">Passwords didn\'t match</string>
+
+    <!-- errors -->
+    <string name="error_username_short">Username must be at least 6 characters</string>
+    <string name="error_invalid_username">Only letters, numbers, and underscores are allowed</string>
+    <string name="error_invalid_edu_email">Enter a valid .edu email</string>
+    <string name="error_password_short">Password must be at least 6 characters</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+    <string name="error_invalid_zip">Zip code must be 5 numbers</string>
 
 </resources>

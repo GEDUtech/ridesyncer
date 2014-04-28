@@ -5,6 +5,7 @@ import org.json.JSONException;
 import com.gedutech.ridesyncer.api.ApiResult;
 import com.gedutech.ridesyncer.api.UsersApi;
 import com.gedutech.ridesyncer.models.User;
+import com.gedutech.ridesyncer.utils.Validation;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -49,7 +50,7 @@ public class RegisterActivity extends Activity {
 		mPasswordView = (EditText) findViewById(R.id.pwtfPassword);
 		mRepeatPasswordView = (EditText) findViewById(R.id.pwtfRepeatPassword);
 
-		// Placeholder for address
+		mAddressView = (EditText) findViewById(R.id.etfAddress);
 		mCityView = (EditText) findViewById(R.id.etfCity);
 		mStateView = (EditText) findViewById(R.id.etfState);
 		mZipView = (EditText) findViewById(R.id.etfZip);
@@ -64,6 +65,19 @@ public class RegisterActivity extends Activity {
 		});
 	}
 
+	public boolean isValidUsername(String username) {
+		return username.matches("(?=.*[a-zA-Z])(\\w+)");
+	}
+
+	public boolean isValidEmail(String email) {
+		return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() && email.endsWith(".edu");
+	}
+
+	protected EditText invalidate(EditText view, int errorMsgId) {
+		view.setError(getString(errorMsgId));
+		return view;
+	}
+
 	public void attemptRegister() {
 		if (mRegisterTask != null) {
 			return;
@@ -76,12 +90,12 @@ public class RegisterActivity extends Activity {
 		mUsernameView.setError(null);
 		mPasswordView.setError(null);
 		mRepeatPasswordView.setError(null);
+		mAddressView.setError(null);
 		mCityView.setError(null);
 		mStateView.setError(null);
 		mZipView.setError(null);
 		mRideView.setError(null);
 
-		// Insert validation here
 		User user = new User();
 		user.setFirstName(mFirstNameView.getText().toString());
 		user.setLastName(mLastNameView.getText().toString());
@@ -89,62 +103,47 @@ public class RegisterActivity extends Activity {
 		user.setUsername(mUsernameView.getText().toString());
 		user.setPassword(mPasswordView.getText().toString());
 		user.setRepeatPassword(mRepeatPasswordView.getText().toString());
-		// Placeholder for address
+		user.setAddress(mAddressView.getText().toString());
 		user.setCity(mCityView.getText().toString());
 		user.setState(mStateView.getText().toString());
 		user.setZip(mZipView.getText().toString());
 		user.setRide(mRideView.getText().toString());
 
-		boolean cancel = false;
-		View focusView = null;
-
-		if (user.getFirstName().isEmpty()) {
-			mFirstNameView.setError(getString(R.string.error_field_required));
-		}
-
-		if (user.getLastName().isEmpty()) {
-			mLastNameView.setError(getString(R.string.error_field_required));
-		}
-
-		if (user.getEmail().isEmpty()) {
-			mEmailView.setError(getString(R.string.error_field_required));
-		}
-
-		if (!android.util.Patterns.EMAIL_ADDRESS.matcher(user.getEmail()).matches()
-				|| user.getEmail().substring(user.getEmail().length() - 4).equals(".edu")) {
-			mEmailView.setError(getString(R.string.InvalidEmail));
-		}
+		Validation validation = new Validation(this);
 
 		if (user.getUsername().length() < 6) {
-			mUsernameView.setError(getString(R.string.InvalidUsername));
+			validation.invalidate(mUsernameView, R.string.error_username_short);
+		} else if (!isValidUsername(user.getUsername())) {
+			validation.invalidate(mUsernameView, R.string.error_invalid_username);
 		}
 
+		if (!isValidEmail(user.getEmail())) {
+			validation.invalidate(mEmailView, R.string.error_invalid_email);
+		}
+
+		validation.required(mFirstNameView);
+		validation.required(mLastNameView);
+
 		if (user.getPassword().length() < 6) {
-			mPasswordView.setError(getString(R.string.InvalidPassword));
+			validation.invalidate(mPasswordView, R.string.error_password_short);
 		}
 
 		if (!user.getRepeatPassword().equals(user.getPassword())) {
-			mRepeatPasswordView.setError(getString(R.string.PasswordsDontMatch));
+			validation.invalidate(mRepeatPasswordView, R.string.error_password_mismatch);
 		}
 
-		if (user.getCity().isEmpty()) {
-			mCityView.setError(getString(R.string.error_field_required));
+		validation.required(mAddressView);
+		validation.required(mCityView);
+		validation.required(mStateView);
+
+		if (!user.getZip().matches("[0-9]{5}")) {
+			validation.invalidate(mZipView, R.string.error_invalid_zip);
 		}
 
-		if (user.getState().isEmpty()) {
-			mStateView.setError(getString(R.string.error_field_required));
-		}
+		validation.required(mRideView);
 
-		if (user.getZip().length() < 5 || !user.getZip().matches("[0-9]+")) {
-			mZipView.setError(getString(R.string.InvalidZip));
-		}
-
-		if (user.getRide().isEmpty()) {
-			mRideView.setError(getString(R.string.error_field_required));
-		}
-
-		if (cancel) {
-			focusView.requestFocus();
+		if (validation.hasErrors()) {
+			validation.getFocusView().requestFocus();
 		} else {
 			mRegisterTask = new UserRegisterTask();
 			mRegisterTask.execute(user);

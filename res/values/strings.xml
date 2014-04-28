@@ -3,6 +3,15 @@
 
     <string name="app_name">RideSyncer</string>
     <string name="action_settings">Settings</string>
+    <string name="or">or</string>
+    <string name="create_account">Create an Account</string>
+    <string name="weekday">Weekday</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+    <!-- input labels -->
     <string name="etfEmailAddress">Email Address:</string>
     <string name="etfUsername">Username:</string>
     <string name="pwtfPassword">Password:</string>
@@ -18,9 +27,6 @@
     <string name="btnRegister">Register</string>
     <string name="btnLogin">Login</string>
     <string name="btnVerify">Verify</string>
-    <string name="weekday">Weekday</string>
-    <string name="start">Start</string>
-    <string name="end">End</string>
 
     <!-- errors -->
     <string name="error_username_short">Username must be at least 6 characters</string>

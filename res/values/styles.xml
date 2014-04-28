@@ -1,4 +1,25 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="RideSyncer" parent="@android:style/Theme.Holo.Light">
+        <item name="android:editTextStyle">@style/RideSyncer.Widget.EditText</item>
+        <item name="android:buttonStyle">@style/RideSyncer.Widget.Button</item>
+    </style>
+
+    <style name="RideSyncer.Widget.EditText" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/input</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+
+    <style name="RideSyncer.Widget.Button" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/button</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
 
     <style name="LoginFormContainer">
         <item name="android:layout_width">match_parent</item>

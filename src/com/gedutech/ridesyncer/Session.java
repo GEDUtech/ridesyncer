@@ -18,6 +18,8 @@ import com.gedutech.ridesyncer.models.User;
 
 public class Session {
 
+	private static Session instance;
+
 	private static final String PREFERENCES_NAME = "RideSyncer";
 	private static final String AUTH_USER_KEY = "auth_user";
 	private static final String IS_LOGGED_IN_KEY = "is_logged_in";
@@ -25,10 +27,18 @@ public class Session {
 	private Context context;
 	private SharedPreferences pref;
 
-	public Session(Context context) {
-		this.context = context;
+	private User authUser;
 
+	private Session(Context context) {
+		this.context = context;
 		pref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+	}
+
+	public static Session getInstance(Context context) {
+		if (instance == null) {
+			instance = new Session(context);
+		}
+		return instance;
 	}
 
 	public boolean isLoggedIn() {
@@ -36,28 +46,38 @@ public class Session {
 	}
 
 	public User getAuthUser() {
-		User user = null;
-		try {
-			user = User.fromJSON(readJSON(AUTH_USER_KEY));
-		} catch (Exception e) {
-			Log.d("RideSyncer", "Failed to read auth user");
+		if (authUser == null) {
+			try {
+				authUser = User.fromJSON(readJSON(AUTH_USER_KEY));
+			} catch (Exception e) {
+				Log.d("RideSyncer", "Failed to read auth user");
+			}
 		}
-		return user;
+		return authUser;
 	}
 
-	public boolean setAuthUser(User user) {
-		try {
-			write(AUTH_USER_KEY, user.toJSON());
-		} catch (Exception e) {
-			Log.d("RideSyncer", "Failed to write auth user: " + e.getMessage());
+	public boolean login(User user) {
+		authUser = user;
+
+		if (!saveAuthUser()) {
+			authUser = null;
 			return false;
 		}
 
 		Editor editor = pref.edit();
-
 		editor.putBoolean(IS_LOGGED_IN_KEY, true);
 		editor.putString("token", user.getToken());
 		editor.commit();
+		return true;
+	}
+
+	public boolean saveAuthUser() {
+		try {
+			write(AUTH_USER_KEY, authUser.toJSON());
+		} catch (Exception e) {
+			Log.d("RideSyncer", "Failed to write auth user: " + e.getMessage());
+			return false;
+		}
 		return true;
 	}
 

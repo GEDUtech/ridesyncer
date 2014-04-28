@@ -14,76 +14,148 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfFName"
+            android:textAppearance="?android:attr/textAppearance" />
+
         <EditText
             android:id="@+id/etfFName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etfFName"
+            android:layout_marginBottom="10dp"
             android:inputType="textPersonName" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfLName"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <EditText
             android:id="@+id/etfLName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etfLName"
+            android:layout_marginBottom="10dp"
             android:inputType="textPersonName" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfEmailAddress"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <EditText
             android:id="@+id/etfEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etfEmailAddress"
+            android:layout_marginBottom="10dp"
             android:inputType="textEmailAddress" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfFName"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <EditText
             android:id="@+id/etfUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etfUsername" />
+            android:layout_marginBottom="10dp"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pwtfPassword"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <EditText
             android:id="@+id/pwtfPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/pwtfPassword"
+            android:layout_marginBottom="10dp"
             android:inputType="textPassword" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pwtfRepeatPassword"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <EditText
             android:id="@+id/pwtfRepeatPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/pwtfRepeatPassword"
+            android:layout_marginBottom="10dp"
             android:inputType="textPassword" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfAddress"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <EditText
             android:id="@+id/etfAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etfAddress" />
+            android:layout_marginBottom="10dp"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfCity"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <EditText
             android:id="@+id/etfCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etfCity" />
+            android:layout_marginBottom="10dp"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfState"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <EditText
             android:id="@+id/etfState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etfState" />
+            android:layout_marginBottom="10dp"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfZip"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <EditText
             android:id="@+id/etfZip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etfZip" />
+            android:layout_marginBottom="10dp"
+            android:inputType="number"
+            android:maxLength="5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfRide"
+            android:textAppearance="?android:attr/textAppearance" />
 
         <EditText
             android:id="@+id/etfRide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etfRide"
+            android:layout_marginBottom="10dp"
             android:inputType="textMultiLine" />
 
         <Button

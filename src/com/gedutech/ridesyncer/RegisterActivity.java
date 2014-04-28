@@ -152,9 +152,7 @@ public class RegisterActivity extends Activity {
 	}
 
 	private void register(User user) {
-		Session session = new Session(this);
-
-		if (!session.setAuthUser(user)) {
+		if (!Session.getInstance(this).login(user)) {
 			return;
 		}
 

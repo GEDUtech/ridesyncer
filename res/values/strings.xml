@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <string name="app_name">RideSyncer</string>
     <string name="action_settings">Settings</string>
@@ -21,5 +21,10 @@
     <string name="weekday">Weekday</string>
     <string name="start">Start</string>
     <string name="end">End</string>
+    <string name="InvalidEmail" R.string.eftInvalidEmail="Enter a valid .edu Email" android:id="etfInvalidEmail" android:layout_height="wrap_content" android:layout_width="wrap_content">Enter a valid .edu Email</string>
+    <string android:layout_height="wrap_content" android:id="InvalidPassword" android:layout_width="wrap_content" name="InvalidPassword">Password must be at least 6 characters</string>
+    <string android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="InvalidUsername" name="InvalidUsername">Username must be at least 6 characters</string>
+    <string android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="InvalidZip" name="InvalidZip">Zip code must be 5 numbers</string>
+    <string android:layout_height="wrap_content" android:id="PasswordsDontMatch" android:layout_width="wrap_content" name="PasswordsDontMatch">Passwords didn\'t match</string>
 
 </resources>

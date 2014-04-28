@@ -48,6 +48,7 @@ public class RegisterActivity extends Activity {
 		mUsernameView = (EditText) findViewById(R.id.etfUsername);
 		mPasswordView = (EditText) findViewById(R.id.pwtfPassword);
 		mRepeatPasswordView = (EditText) findViewById(R.id.pwtfRepeatPassword);
+
 		// Placeholder for address
 		mCityView = (EditText) findViewById(R.id.etfCity);
 		mStateView = (EditText) findViewById(R.id.etfState);
@@ -68,7 +69,17 @@ public class RegisterActivity extends Activity {
 			return;
 		}
 
-		// TODO: reset all errors
+		// Reset Errors
+		mFirstNameView.setError(null);
+		mLastNameView.setError(null);
+		mEmailView.setError(null);
+		mUsernameView.setError(null);
+		mPasswordView.setError(null);
+		mRepeatPasswordView.setError(null);
+		mCityView.setError(null);
+		mStateView.setError(null);
+		mZipView.setError(null);
+		mRideView.setError(null);
 
 		// Insert validation here
 		User user = new User();
@@ -87,21 +98,50 @@ public class RegisterActivity extends Activity {
 		boolean cancel = false;
 		View focusView = null;
 
-		// TODO: validate fields
-		// Criteria:
-		// --------
-		// * All fields: Not empty
-		// * Password matches repeat password
-		// * Email contains "@" and ends with ".edu"
-		// * Zip code 5 Digits, all numbers
-		// * Password min length 6
-		// * Username min length 6
-		//
-		// Notes:
-		// -----
-		// * Use user.getFirstName(), user.getUsername(), etc, to get the values
-		// * Use LoginActivity's attemptLogin() method as an example
-		// REMOVE THIS COMMENT BLOCK WHEN YOU ARE DONE AND THE ONE ABOVE
+		if (user.getFirstName().isEmpty()) {
+			mFirstNameView.setError(getString(R.string.error_field_required));
+		}
+
+		if (user.getLastName().isEmpty()) {
+			mLastNameView.setError(getString(R.string.error_field_required));
+		}
+
+		if (user.getEmail().isEmpty()) {
+			mEmailView.setError(getString(R.string.error_field_required));
+		}
+
+		if (!android.util.Patterns.EMAIL_ADDRESS.matcher(user.getEmail()).matches()
+				|| user.getEmail().substring(user.getEmail().length() - 4).equals(".edu")) {
+			mEmailView.setError(getString(R.string.InvalidEmail));
+		}
+
+		if (user.getUsername().length() < 6) {
+			mUsernameView.setError(getString(R.string.InvalidUsername));
+		}
+
+		if (user.getPassword().length() < 6) {
+			mPasswordView.setError(getString(R.string.InvalidPassword));
+		}
+
+		if (!user.getRepeatPassword().equals(user.getPassword())) {
+			mRepeatPasswordView.setError(getString(R.string.PasswordsDontMatch));
+		}
+
+		if (user.getCity().isEmpty()) {
+			mCityView.setError(getString(R.string.error_field_required));
+		}
+
+		if (user.getState().isEmpty()) {
+			mStateView.setError(getString(R.string.error_field_required));
+		}
+
+		if (user.getZip().length() < 5 || !user.getZip().matches("[0-9]+")) {
+			mZipView.setError(getString(R.string.InvalidZip));
+		}
+
+		if (user.getRide().isEmpty()) {
+			mRideView.setError(getString(R.string.error_field_required));
+		}
 
 		if (cancel) {
 			focusView.requestFocus();

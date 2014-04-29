@@ -114,8 +114,9 @@ public class MainActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-		case R.menu.menu:
-			System.out.println("you pressed logout");
+		case R.id.logout:
+			session.logout();
+			startLoginActivity();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

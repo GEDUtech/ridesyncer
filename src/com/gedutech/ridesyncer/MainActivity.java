@@ -7,6 +7,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.gedutech.ridesyncer.models.User;
 
@@ -99,5 +102,23 @@ public class MainActivity extends FragmentActivity {
 			return 1;
 		}
 
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.menu.menu:
+			System.out.println("you pressed logout");
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }

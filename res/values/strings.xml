@@ -27,6 +27,7 @@
     <string name="btnRegister">Register</string>
     <string name="btnLogin">Login</string>
     <string name="btnVerify">Verify</string>
+    <string name="logout">Logout</string>
 
     <!-- errors -->
     <string name="error_username_short">Username must be at least 6 characters</string>

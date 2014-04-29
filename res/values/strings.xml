@@ -36,5 +36,6 @@
     <string name="error_password_short">Password must be at least 6 characters</string>
     <string name="error_password_mismatch">Passwords do not match</string>
     <string name="error_invalid_zip">Zip code must be 5 numbers</string>
+    <string name="erro_incorrect_verification_code">Incorrect verification code</string>
 
 </resources>

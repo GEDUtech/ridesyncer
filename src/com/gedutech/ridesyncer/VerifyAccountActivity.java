@@ -100,9 +100,8 @@ public class VerifyAccountActivity extends Activity {
 					Log.d("RideSyncer", result.getRaw());
 				}
 			} else if (result.hasValidationErrors()) {
-				// Do something
+				mVerify.setError(VerifyAccountActivity.this.getString(R.string.erro_incorrect_verification_code));
 				Log.d("RideSyncer", result.getRaw());
-				Toast.makeText(VerifyAccountActivity.this, "Unexpected Problem", Toast.LENGTH_LONG).show();
 			} else {
 				Log.d("RideSyncer", result.getRaw());
 				Toast.makeText(VerifyAccountActivity.this, "Unexpected Problem", Toast.LENGTH_LONG).show();

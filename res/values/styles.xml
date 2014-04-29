@@ -3,6 +3,7 @@
     <style name="RideSyncer" parent="@android:style/Theme.Holo.Light">
         <item name="android:editTextStyle">@style/RideSyncer.Widget.EditText</item>
         <item name="android:buttonStyle">@style/RideSyncer.Widget.Button</item>
+        <item name="android:textAppearance">@style/RideSyncer.Widget.TextView</item>
     </style>
 
     <style name="RideSyncer.Widget.EditText" parent="@android:style/Widget.EditText">
@@ -13,8 +14,14 @@
         <item name="android:paddingRight">10dp</item>
     </style>
 
+    <style name="RideSyncer.Widget.TextView" parent="android:Widget.TextView">
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="RideSyncer.Widget.Button" parent="@android:style/Widget.Button">
-        <item name="android:background">@drawable/button</item>
+        <item name="android:background">@drawable/btn</item>
+        <item name="android:textColor">@color/light</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="android:paddingLeft">10dp</item>

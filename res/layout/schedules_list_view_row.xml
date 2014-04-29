@@ -12,10 +12,9 @@
         android:id="@+id/txtWeekday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/weekday"
-        android:typeface="monospace" />
+        android:text="@string/weekday" />
 
     <TextView
         android:id="@+id/txtStart"

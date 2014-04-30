@@ -80,6 +80,14 @@ public class LoginActivity extends Activity {
 				attemptLogin();
 			}
 		});
+		
+		findViewById(R.id.txtRegister).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+				finish();
+			}
+		});
 	}
 
 	/**
@@ -234,5 +242,7 @@ public class LoginActivity extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 		}
+		
+		
 	}
 }

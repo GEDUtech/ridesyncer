@@ -48,6 +48,24 @@ public class MainActivity extends FragmentActivity {
 	protected void setupViewPager() {
 		pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(new MainPagerAdapter(getSupportFragmentManager()));
+		pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+			@Override
+			public void onPageSelected(int position) {
+				getActionBar().setTitle(pager.getAdapter().getPageTitle(position));
+
+			}
+
+			@Override
+			public void onPageScrolled(int position, float offset, int offsetPixels) {
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+
+			}
+		});
 	}
 
 	protected boolean checkAuthorization() {
@@ -83,6 +101,8 @@ public class MainActivity extends FragmentActivity {
 			switch (position) {
 			case 0:
 				return "My Schedule";
+			case 1:
+				return "Search";
 			}
 			return null;
 		}
@@ -92,6 +112,8 @@ public class MainActivity extends FragmentActivity {
 			switch (position) {
 			case 0:
 				return new SchedulesFragment();
+			case 1:
+				return new SearchFragment();
 			}
 
 			return null;
@@ -99,7 +121,7 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return 1;
+			return 2;
 		}
 
 	}

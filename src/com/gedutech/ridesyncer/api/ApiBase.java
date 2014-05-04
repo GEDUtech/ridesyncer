@@ -1,5 +1,7 @@
 package com.gedutech.ridesyncer.api;
 
+import java.io.IOException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
@@ -7,11 +9,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 
 import android.util.Log;
-
-import java.io.IOException;
 
 public class ApiBase {
 
@@ -29,7 +28,7 @@ public class ApiBase {
 		this.token = token;
 	}
 
-	public ApiResult execute(HttpEntityEnclosingRequestBase request, JSONObject data) {
+	public ApiResult execute(HttpEntityEnclosingRequestBase request, Object data) {
 		ApiResult result = null;
 
 		try {

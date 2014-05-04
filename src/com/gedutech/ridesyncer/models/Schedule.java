@@ -23,8 +23,8 @@ public class Schedule {
 		obj.put("Id", this.id);
 		obj.put("UserId", this.userId);
 		obj.put("Weekday", this.weekday);
-		obj.put("Start", TimeUtil.formatRFC3339(this.start));
-		obj.put("End", TimeUtil.formatRFC3339(this.end));
+		obj.put("Start", TimeUtil.formatTime(this.start));
+		obj.put("End", TimeUtil.formatTime(this.end));
 		obj.put("Deleted", this.deletedAt);
 
 		return obj;

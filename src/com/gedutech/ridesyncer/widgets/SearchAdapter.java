@@ -15,8 +15,18 @@ import com.gedutech.ridesyncer.models.User;
 
 public class SearchAdapter extends ArrayAdapter<User> {
 
-	public SearchAdapter(Context context, List<User> objects) {
-		super(context, 0, objects);
+	public SearchAdapter(Context context, List<User> results) {
+		super(context, 0, results);
+	}
+
+	@Override
+	public boolean hasStableIds() {
+		return true;
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return getItem(position).getId();
 	}
 
 	@Override

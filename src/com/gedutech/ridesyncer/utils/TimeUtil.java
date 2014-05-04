@@ -7,16 +7,23 @@ import java.util.Date;
 
 public class TimeUtil {
 
+	public static final String TIME_FORMAT = "hh:mm:ss";
+	public static final String RFC3339_FORMAT = "yyyy-MM-dd'T'h:m:ssXXX";
+
 	public static SimpleDateFormat getFormatter(String format) {
 		return new SimpleDateFormat(format);
 	}
 
 	public static Date parseTime(String time) throws ParseException {
-		return getFormatter("h:m:ss").parse(time);
+		return getFormatter(TIME_FORMAT).parse(time);
+	}
+
+	public static String formatTime(Date time) {
+		return getFormatter(TIME_FORMAT).format(time);
 	}
 
 	public static Date parseRFC3339(String dateString) throws ParseException {
-		return getFormatter("yyyy-MM-dd'T'h:m:ssXXX").parse(dateString);
+		return getFormatter(RFC3339_FORMAT).parse(dateString);
 	}
 
 	public static String shortTime(Date date) {
@@ -24,7 +31,7 @@ public class TimeUtil {
 	}
 
 	public static String formatRFC3339(Date date) {
-		return getFormatter("yyyy-MM-dd'T'h:m:ssXXX").format(date);
+		return getFormatter(RFC3339_FORMAT).format(date);
 	}
 
 	public static String shortWeekday(int weekday) {

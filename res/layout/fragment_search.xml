@@ -1,12 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
+    android:background="@drawable/pattern_repeat"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    tools:context="com.gedutech.ridesyncer.SchedulesFragment" >
+
+    <Button
+        android:id="@+id/btnSyncEditor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:drawableRight="@drawable/ic_action_next_item"
+        android:padding="4dp"
+        android:text="Sync Editor" />
 
     <ListView
         android:id="@+id/lstSearch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnSyncEditor"
+        android:layout_alignParentTop="true" />
 
-</LinearLayout>
+</RelativeLayout>

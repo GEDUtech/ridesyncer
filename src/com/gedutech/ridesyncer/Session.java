@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -33,10 +34,12 @@ public class Session {
 
 	private User authUser;
 	private List<Sync> syncs;
+	private List<User> matches;
 
 	private Session(Context context) {
 		this.context = context;
 		pref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+		matches = new ArrayList<>();
 	}
 
 	public static Session getInstance(Context context) {
@@ -78,6 +81,7 @@ public class Session {
 
 	public boolean saveAuthUser() {
 		try {
+			Log.d("RideSyncer", authUser.toJSON().toString(4));
 			write(AUTH_USER_KEY, authUser.toJSON());
 		} catch (Exception e) {
 			Log.d("RideSyncer", "Failed to write auth user: " + e.getMessage());
@@ -102,6 +106,14 @@ public class Session {
 
 	public void logout() {
 		pref.edit().remove(IS_LOGGED_IN_KEY).commit();
+	}
+
+	public void setMatches(List<User> matches) {
+		this.matches = matches;
+	}
+
+	public List<User> getMatches() {
+		return matches;
 	}
 
 	public JSONObject readJSON(String key) throws IOException, JSONException {

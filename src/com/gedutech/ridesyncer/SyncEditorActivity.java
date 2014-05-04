@@ -1,7 +1,6 @@
 package com.gedutech.ridesyncer;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 
 import com.gedutech.ridesyncer.api.ApiResult;
 import com.gedutech.ridesyncer.api.SyncsApi;
-import com.gedutech.ridesyncer.models.Schedule;
 import com.gedutech.ridesyncer.models.Sync;
 import com.gedutech.ridesyncer.models.User;
 import com.gedutech.ridesyncer.widgets.ProgressSwitcher;
@@ -58,37 +56,16 @@ public class SyncEditorActivity extends Activity {
 		authUser = session.getAuthUser();
 		syncsApi = new SyncsApi(authUser.getToken());
 
-		// TODO: Remove
-		if (authUser.getSchedules().size() == 0) {
-			authUser.getSchedules().add(make(authUser, 1));
-			authUser.getSchedules().add(make(authUser, 2));
-			authUser.getSchedules().add(make(authUser, 3));
-			authUser.getSchedules().add(make(authUser, 4));
-			authUser.getSchedules().add(make(authUser, 5));
-		}
-
 		users = new ArrayList<>();
 
-		// u1
-		User u1 = new User();
-		u1.id = 2;
-		u1.setUsername("BurpTurp");
-		u1.getSchedules().add(make(u1, 1));
-		u1.getSchedules().add(make(u1, 3));
-
-		// u2
-		User u2 = new User();
-		u2.id = 3;
-		u2.setUsername("ChopStop");
-		u2.getSchedules().add(make(u2, 1));
-		// u2.getSchedules().add(make(u2, 2));
-		u2.getSchedules().add(make(u2, 3));
-		// u2.getSchedules().add(make(u2, 4));
-		u2.getSchedules().add(make(u2, 5));
-
-		users.add(u1);
-		users.add(u2);
-		// END REMOVE
+		for (long id : getIntent().getExtras().getLongArray("ids")) {
+			for (User user : session.getMatches()) {
+				if (user.getId() == id) {
+					users.add(user);
+					break;
+				}
+			}
+		}
 
 		syncManager = new SyncManager(authUser, users);
 
@@ -115,16 +92,6 @@ public class SyncEditorActivity extends Activity {
 		} catch (Exception e) {
 			Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
 		}
-	}
-
-	// TODO: Remove
-	protected Schedule make(User user, int weekday) {
-		Schedule s01 = new Schedule();
-		s01.setStart(new Date(0, 0, 0, 12, 0));
-		s01.setEnd(new Date(0, 0, 0, 1, 0));
-		s01.setWeekday(weekday);
-		s01.setUserId(user.getId());
-		return s01;
 	}
 
 	protected void makeHeader() {

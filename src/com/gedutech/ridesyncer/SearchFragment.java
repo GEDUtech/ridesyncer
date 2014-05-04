@@ -1,11 +1,10 @@
 package com.gedutech.ridesyncer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,7 +26,6 @@ public class SearchFragment extends Fragment {
 
 	private User authUser;
 	private Session session;
-	private List<User> results;
 	private SearchAdapter adapter;
 	private UsersApi usersApi;
 	private UserSearchTask mUserSearchTask;
@@ -43,11 +43,35 @@ public class SearchFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		results = new ArrayList<>();
+		final ListView listView = (ListView) getView().findViewById(R.id.lstSearch);
+		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-		ListView listView = (ListView) getView().findViewById(R.id.lstSearch);
-		adapter = new SearchAdapter(getActivity(), results);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (listView.getCheckedItemCount() > 2) {
+					listView.setItemChecked(position, false);
+				}
+			}
+		});
+		adapter = new SearchAdapter(getActivity(), session.getMatches());
 		listView.setAdapter(adapter);
+
+		getView().findViewById(R.id.btnSyncEditor).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				long[] ids = listView.getCheckedItemIds();
+
+				if (ids.length == 0) {
+					Toast.makeText(getActivity(), "No matches selected", Toast.LENGTH_SHORT).show();
+					return;
+				}
+
+				Intent intent = new Intent(getActivity(), SyncEditorActivity.class);
+				intent.putExtra("ids", ids);
+				startActivity(intent);
+			}
+		});
 
 		mUserSearchTask = new UserSearchTask();
 		mUserSearchTask.execute();
@@ -81,15 +105,16 @@ public class SearchFragment extends Fragment {
 			// progressSwitcher.showProgress(false);
 
 			if (result.isSuccess()) {
-				Toast.makeText(getActivity(), "Success", Toast.LENGTH_LONG).show();
+				// Toast.makeText(getActivity(), "Success",
+				// Toast.LENGTH_LONG).show();
 
 				try {
-					Log.d("RideSyncer", result.getData().toString(4));
+					// Log.d("RideSyncer", result.getData().toString(4));
 
+					List<User> matches = session.getMatches();
 					JSONArray resultsArr = result.getData().getJSONArray("results");
-
 					for (int i = 0; i < resultsArr.length(); i++) {
-						results.add(User.fromJSON(resultsArr.getJSONObject(i)));
+						matches.add(User.fromJSON(resultsArr.getJSONObject(i)));
 					}
 				} catch (Exception e) {
 					Log.d("RideSyncer", "onPostExecute: " + e.getMessage());

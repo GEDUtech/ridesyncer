@@ -58,6 +58,14 @@ public class User implements Serializable {
 			obj.put("Distance", this.distance);
 		}
 
+		JSONArray schedulesArr = new JSONArray();
+
+		for (Schedule schedule : schedules) {
+			schedulesArr.put(schedule.toJSON());
+		}
+
+		obj.put("Schedules", schedulesArr);
+
 		return obj;
 	}
 

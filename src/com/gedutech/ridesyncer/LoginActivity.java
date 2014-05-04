@@ -80,7 +80,7 @@ public class LoginActivity extends Activity {
 				attemptLogin();
 			}
 		});
-		
+
 		findViewById(R.id.txtRegister).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -180,7 +180,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void login(User user) {
-		if (!Session.getInstance(this).login(user)) {
+		if (!Session.getInstance(getApplicationContext()).login(user)) {
 			return;
 		}
 
@@ -218,6 +218,8 @@ public class LoginActivity extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 
+			Log.d("RideSyncer", apiResult.getRaw());
+
 			if (apiResult.isSuccess()) {
 				try {
 					User user = User.fromJSON(apiResult.getData());
@@ -242,7 +244,6 @@ public class LoginActivity extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 		}
-		
-		
+
 	}
 }

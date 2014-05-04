@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfStartDate"
+            android:textAppearance="?android:attr/textAppearance" />
+
+        <EditText
+            android:id="@+id/etfStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/defaultDate"
+            android:inputType="date" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfEndDate"
+            android:textAppearance="?android:attr/textAppearance" />
+
+        <EditText
+            android:id="@+id/etfEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/defaultDate"
+            android:inputType="date" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfStartTime"
+            android:textAppearance="?android:attr/textAppearance" />
+
+        <EditText
+            android:id="@+id/etfStartTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/defaultTime"
+            android:inputType="time" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etfEndTime"
+            android:textAppearance="?android:attr/textAppearance" />
+
+        <EditText
+            android:id="@+id/etfEndTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/defaultTime"
+            android:inputType="time" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/checkBoxM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chkbxM" />
+
+            <CheckBox
+                android:id="@+id/checkBoxT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chkbxT" />
+
+            <CheckBox
+                android:id="@+id/checkBoxW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chkbxW" />
+            
+            <CheckBox
+                android:id="@+id/checkBoxTh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chkbxTh" />
+            
+            <CheckBox
+                android:id="@+id/checkBoxF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chkbxF" />
+            
+            <CheckBox
+                android:id="@+id/checkBoxSa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chkbxSa" />
+            
+            <CheckBox
+                android:id="@+id/checkBoxSu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chkbxSu" />
+
+        </LinearLayout>
+        
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnAdd" />
+
+    </LinearLayout>
+
+</ScrollView>

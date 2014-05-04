@@ -28,6 +28,20 @@
     <string name="btnLogin">Login</string>
     <string name="btnVerify">Verify</string>
     <string name="logout">Logout</string>
+    <string name="btnAdd">Add</string>
+    <string name="etfStartDate">Start Date:</string>
+    <string name="etfEndDate">End Date:</string>
+    <string name="etfStartTime">Start time:</string>
+    <string name="etfEndTime">End time:</string>
+    <string name="defaultTime">hh:mm</string>
+    <string name="defaultDate">mm/dd/yyyy</string>
+    <string name="chkbxM">M</string>
+    <string name="chkbxT">T</string>
+    <string name="chkbxW">W</string>
+    <string name="chkbxTh">Th</string>
+    <string name="chkbxF">F</string>
+    <string name="chkbxSa">Sa</string>
+    <string name="chkbxSu">Su</string>
 
     <!-- errors -->
     <string name="error_username_short">Username must be at least 6 characters</string>

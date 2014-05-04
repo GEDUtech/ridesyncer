@@ -11,6 +11,10 @@ public class TimeUtil {
 		return new SimpleDateFormat(format);
 	}
 
+	public static Date parseTime(String time) throws ParseException {
+		return getFormatter("h:m:ss").parse(time);
+	}
+
 	public static Date parseRFC3339(String dateString) throws ParseException {
 		return getFormatter("yyyy-MM-dd'T'h:m:ssXXX").parse(dateString);
 	}

@@ -36,8 +36,8 @@ public class Schedule {
 		schedule.id = obj.getLong("Id");
 		schedule.userId = obj.getLong("UserId");
 		schedule.weekday = obj.getInt("Weekday");
-		schedule.start = TimeUtil.parseRFC3339(obj.getString("Start"));
-		schedule.end = TimeUtil.parseRFC3339(obj.getString("End"));
+		schedule.start = TimeUtil.parseTime(obj.getString("Start"));
+		schedule.end = TimeUtil.parseTime(obj.getString("End"));
 
 		return schedule;
 	}

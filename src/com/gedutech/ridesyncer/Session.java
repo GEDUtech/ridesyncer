@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,6 +16,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
+import com.gedutech.ridesyncer.models.Sync;
 import com.gedutech.ridesyncer.models.User;
 
 public class Session {
@@ -23,11 +26,13 @@ public class Session {
 	private static final String PREFERENCES_NAME = "RideSyncer";
 	private static final String AUTH_USER_KEY = "auth_user";
 	private static final String IS_LOGGED_IN_KEY = "is_logged_in";
+	private static final String SYNCS_KEY = "syncs";
 
 	private Context context;
 	private SharedPreferences pref;
 
 	private User authUser;
+	private List<Sync> syncs;
 
 	private Session(Context context) {
 		this.context = context;
@@ -81,6 +86,20 @@ public class Session {
 		return true;
 	}
 
+	public boolean saveSyncs() throws JSONException {
+		JSONArray data = new JSONArray();
+		for (Sync sync : syncs) {
+			data.put(sync.toJSON());
+		}
+		JSONObject json = new JSONObject();
+		json.put("syncs", data);
+		return write(SYNCS_KEY, json);
+	}
+
+	public List<Sync> getSyncs() {
+		return syncs;
+	}
+
 	public void logout() {
 		pref.edit().remove(IS_LOGGED_IN_KEY).commit();
 	}
@@ -117,7 +136,7 @@ public class Session {
 		return true;
 	}
 
-	public boolean write(String key, JSONObject data) {
+	public boolean write(String key, Object data) {
 		return write(key, data.toString());
 	}
 

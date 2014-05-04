@@ -3,6 +3,7 @@ package com.gedutech.ridesyncer.models;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,7 +13,7 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	long id;
+	public long id;
 	String username;
 	String password;
 	String repeatPassword;
@@ -29,7 +30,7 @@ public class User implements Serializable {
 	boolean emailVerified;
 	boolean tos;
 
-	ArrayList<Schedule> schedules;
+	List<Schedule> schedules;
 
 	public User() {
 		schedules = new ArrayList<Schedule>();
@@ -70,11 +71,11 @@ public class User implements Serializable {
 		user.email = obj.getString("Email");
 		user.emailVerified = obj.getBoolean("EmailVerified");
 		user.ride = obj.getString("Ride");
-		user.token = obj.getString("Token");
-		user.address = obj.getString("Address");
-		user.city = obj.getString("City");
-		user.state = obj.getString("State");
-		user.zip = obj.getString("Zip");
+		user.token = obj.optString("Token");
+		user.address = obj.optString("Address");
+		user.city = obj.optString("City");
+		user.state = obj.optString("State");
+		user.zip = obj.optString("Zip");
 		user.distance = obj.optDouble("Distance");
 
 		JSONArray schedulesArray = obj.optJSONArray("Schedules");
@@ -85,6 +86,16 @@ public class User implements Serializable {
 		}
 
 		return user;
+	}
+
+	public Schedule getScheduleOnWeekday(int weekday) {
+		for (Schedule schedule : getSchedules()) {
+			if (schedule.getWeekday() == weekday) {
+				return schedule;
+
+			}
+		}
+		return null;
 	}
 
 	public long getId() {
@@ -194,7 +205,7 @@ public class User implements Serializable {
 	public void setEmailVerified(boolean emailVerified) {
 		this.emailVerified = emailVerified;
 	}
-	
+
 	public boolean isEmailVerified() {
 		return emailVerified;
 	}
@@ -207,12 +218,12 @@ public class User implements Serializable {
 		this.tos = tos;
 	}
 
-	public ArrayList<Schedule> getSchedules() {
+	public List<Schedule> getSchedules() {
 		return schedules;
 	}
 
-	public void setSchedules(ArrayList<Schedule> schedules) {
-		this.schedules = schedules;
+	public void setSchedules(List<Schedule> s1s) {
+		this.schedules = s1s;
 	}
 
 }

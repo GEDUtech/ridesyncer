@@ -37,6 +37,11 @@
             android:name="com.gedutech.ridesyncer.VerifyAccountActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
+        <activity
+            android:name="com.gedutech.ridesyncer.SyncEditorActivity"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
     </application>
 
 </manifest>

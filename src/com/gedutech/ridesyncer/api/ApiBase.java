@@ -1,17 +1,19 @@
 package com.gedutech.ridesyncer.api;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 
 import android.util.Log;
-
-import java.io.IOException;
 
 public class ApiBase {
 
@@ -29,14 +31,13 @@ public class ApiBase {
 		this.token = token;
 	}
 
-	public ApiResult execute(HttpEntityEnclosingRequestBase request, JSONObject data) {
+	public ApiResult execute(HttpRequestBase request) {
 		ApiResult result = null;
 
 		try {
 			Log.d("RideSyncer", "[" + request.getMethod() + "] " + request.getURI());
 
 			request.setHeader("X-API-TOKEN", this.token);
-			request.setEntity(new StringEntity(data.toString()));
 
 			HttpResponse response = client.execute(request);
 			int statusCode = response.getStatusLine().getStatusCode();
@@ -51,8 +52,21 @@ public class ApiBase {
 		return result;
 	}
 
+	public ApiResult execute(HttpEntityEnclosingRequestBase request, Object data) {
+		try {
+			request.setEntity(new StringEntity(data.toString()));
+			return execute(request);
+		} catch (UnsupportedEncodingException e) {
+			return new ApiResult(0);
+		}
+	}
+
 	public HttpPost post(String path) {
 		return new HttpPost(this.getFullUrl(path));
+	}
+
+	public HttpGet get(String path) {
+		return new HttpGet(getFullUrl(path));
 	}
 
 	protected String getFullUrl(String path) {

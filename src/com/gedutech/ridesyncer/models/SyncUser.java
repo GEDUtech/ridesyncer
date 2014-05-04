@@ -1,36 +1,53 @@
 package com.gedutech.ridesyncer.models;
 
+import java.util.Date;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SyncUser {
 
 	long id;
-	long syncId;
 	long userId;
+	long syncId;
+	int status;
+	int order;
+	Date createdAt;
 
 	public JSONObject toJSON() throws JSONException {
 		JSONObject obj = new JSONObject();
 
 		obj.put("Id", this.id);
-		obj.put("SyncId", this.syncId);
 		obj.put("UserId", this.userId);
+		obj.put("SyncId", this.syncId);
+		obj.put("Status", this.status);
+		obj.put("Order", this.order);
 
 		return obj;
 	}
 
 	public static SyncUser fromJSON(JSONObject obj) throws JSONException {
-		SyncUser syncUser = new SyncUser();
+		SyncUser syncDay = new SyncUser();
 
-		syncUser.id = obj.getLong("Id");
-		syncUser.syncId = obj.getLong("SyncId");
-		syncUser.userId = obj.getLong("UserId");
+		syncDay.id = obj.getLong("Id");
+		syncDay.userId = obj.getLong("UserId");
+		syncDay.syncId = obj.getLong("SyncId");
+		syncDay.status = obj.getInt("Status");
+		syncDay.order = obj.getInt("Order");
 
-		return syncUser;
+		return syncDay;
 	}
 
 	public long getId() {
 		return id;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setuserId(long userId) {
+		this.userId = userId;
 	}
 
 	public long getSyncId() {
@@ -41,11 +58,24 @@ public class SyncUser {
 		this.syncId = syncId;
 	}
 
-	public long getUserId() {
-		return userId;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setStatus(int status) {
+		this.status = status;
 	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
 }

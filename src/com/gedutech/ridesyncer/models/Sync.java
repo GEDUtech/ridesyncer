@@ -1,7 +1,7 @@
 package com.gedutech.ridesyncer.models;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,20 +11,24 @@ public class Sync {
 
 	long id;
 	Date createdAt;
+	int weekday;
 	ArrayList<SyncUser> syncUsers;
-	ArrayList<SyncDay> syncDays;
 
 	public Sync() {
 		syncUsers = new ArrayList<SyncUser>();
-		syncDays = new ArrayList<SyncDay>();
 	}
 
 	public JSONObject toJSON() throws JSONException {
 		JSONObject obj = new JSONObject();
 
 		obj.put("Id", this.id);
-		obj.put("SyncUsers", this.syncUsers);
-		obj.put("SyncDays", this.syncDays);
+		obj.put("Weekday", this.weekday);
+
+		JSONArray syncUsersArray = new JSONArray();
+		for (SyncUser syncUser : syncUsers) {
+			syncUsersArray.put(syncUser.toJSON());
+		}
+		obj.put("SyncUsers", syncUsersArray);
 
 		return obj;
 	}
@@ -33,14 +37,9 @@ public class Sync {
 		Sync sync = new Sync();
 
 		sync.id = obj.getLong("Id");
+		sync.weekday = obj.getInt("Weekday");
 
-		JSONArray syncDaysArray = obj.getJSONArray("SyncDays");
 		JSONArray syncUsersArray = obj.getJSONArray("SyncUsers");
-
-		for (int i = 0; i < syncDaysArray.length(); i++) {
-			sync.syncDays.add(SyncDay.fromJSON(syncDaysArray.getJSONObject(i)));
-		}
-
 		for (int i = 0; i < syncUsersArray.length(); i++) {
 			sync.syncUsers.add(SyncUser.fromJSON(syncUsersArray.getJSONObject(i)));
 		}
@@ -64,11 +63,12 @@ public class Sync {
 		this.syncUsers = syncUsers;
 	}
 
-	public ArrayList<SyncDay> getSyncDays() {
-		return syncDays;
+	public int getWeekday() {
+		return weekday;
 	}
 
-	public void setSyncDays(ArrayList<SyncDay> syncDays) {
-		this.syncDays = syncDays;
+	public void setWeekday(int weekday) {
+		this.weekday = weekday;
 	}
+
 }

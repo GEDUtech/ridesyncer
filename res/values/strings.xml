@@ -10,6 +10,8 @@
     <string name="end">End</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="request_sync">Request Sync</string>
+    <string name="syncing">Syncing&#8230;</string>
 
     <!-- input labels -->
     <string name="etfEmailAddress">Email Address:</string>

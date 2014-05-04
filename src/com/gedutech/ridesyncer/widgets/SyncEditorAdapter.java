@@ -72,10 +72,10 @@ public class SyncEditorAdapter extends ArrayAdapter<User> implements OnClickList
 				checkbox.setOnCheckedChangeListener(this);
 				checkbox.setTag(syncUser);
 				checkbox.setTag(R.string.weekday, weekday);
-				checkbox.setChecked(syncUser.getStatus() == 1);
+				checkbox.setChecked(syncUser.getOrder() > 0);
 
 				int numDrivers = syncManager.numDriversOnWeekday(weekday);
-				if (numDrivers > 1 && syncUser.getStatus() == 1) {
+				if (numDrivers > 1 && syncUser.getOrder() > 0) {
 					Spinner spinner = createSpinner(weekday, syncUser);
 
 					Button btn = new Button(getContext());
@@ -116,13 +116,14 @@ public class SyncEditorAdapter extends ArrayAdapter<User> implements OnClickList
 
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		SyncUser syncUser = (SyncUser) buttonView.getTag();
-		syncUser.setStatus(isChecked ? 1 : 2);
 
 		int weekday = (int) buttonView.getTag(R.string.weekday);
 		int numDrivers = syncManager.numDriversOnWeekday(weekday);
 
-		if (syncUser.getOrder() == 0) {
-			syncUser.setOrder(numDrivers);
+		if (!isChecked) {
+			syncUser.setOrder(0);
+		} else if (isChecked && syncUser.getOrder() == 0) {
+			syncUser.setOrder(numDrivers + 1);
 		}
 
 		notifyDataSetChanged();
@@ -131,7 +132,7 @@ public class SyncEditorAdapter extends ArrayAdapter<User> implements OnClickList
 	public void onClick(View v) {
 		SyncUser syncUser = (SyncUser) v.getTag();
 		int weekday = (int) v.getTag(R.string.weekday);
-		syncUser.setStatus(2);
+
 		syncManager.revertOrder(weekday, syncUser);
 		notifyDataSetChanged();
 	}

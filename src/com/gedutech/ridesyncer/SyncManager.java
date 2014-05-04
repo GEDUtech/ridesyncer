@@ -59,7 +59,7 @@ public class SyncManager {
 	public int numDriversOnWeekday(int weekday) {
 		int count = 0;
 		for (SyncUser syncUser : syncs.get(weekday).getSyncUsers()) {
-			if (syncUser.getStatus() == 1) {
+			if (syncUser.getOrder() > 0) {
 				count++;
 			}
 		}

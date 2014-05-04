@@ -3,7 +3,14 @@
     <style name="RideSyncer" parent="@android:style/Theme.Holo.Light">
         <item name="android:editTextStyle">@style/RideSyncer.Widget.EditText</item>
         <item name="android:buttonStyle">@style/RideSyncer.Widget.Button</item>
-        <item name="android:textAppearance">@style/RideSyncer.Widget.TextView</item>
+        <item name="android:textViewStyle">@style/RideSyncer.Widget.TextView</item>
+        <item name="android:ratingBarStyle">@style/RideSyncer.Widget.RatingBar</item>
+        <item name="android:ratingBarStyleSmall">@style/RideSyncer.Widget.RatingBar</item>
+    </style>
+
+    <style name="RideSyncer.TextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/dark</item>
     </style>
 
     <style name="RideSyncer.Widget.EditText" parent="@android:style/Widget.EditText">
@@ -14,8 +21,14 @@
         <item name="android:paddingRight">10dp</item>
     </style>
 
-    <style name="RideSyncer.Widget.TextView" parent="android:Widget.TextView">
-        <item name="android:textSize">15sp</item>
+    <style name="RideSyncer.Widget.TextView" parent="@android:style/Widget.TextView">
+        <item name="android:textAppearance">@style/RideSyncer.TextAppearance</item>
+    </style>
+
+    <style name="RideSyncer.Widget.RatingBar" parent="@android:style/Widget.Holo.RatingBar.Small">
+        <item name="android:progressDrawable">@drawable/rating</item>
+        <item name="android:minHeight">22dp</item>
+        <item name="android:maxHeight">22dp</item>
     </style>
 
     <style name="RideSyncer.Widget.Button" parent="@android:style/Widget.Button">

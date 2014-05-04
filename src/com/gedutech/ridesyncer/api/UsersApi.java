@@ -32,4 +32,8 @@ public class UsersApi extends ApiBase {
 		return this.execute(this.post("/verify"), data);
 	}
 
+	public ApiResult search() {
+		return execute(get("/search"));
+	}
+
 }

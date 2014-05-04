@@ -71,11 +71,11 @@ public class User implements Serializable {
 		user.email = obj.getString("Email");
 		user.emailVerified = obj.getBoolean("EmailVerified");
 		user.ride = obj.getString("Ride");
-		user.token = obj.getString("Token");
-		user.address = obj.getString("Address");
-		user.city = obj.getString("City");
-		user.state = obj.getString("State");
-		user.zip = obj.getString("Zip");
+		user.token = obj.optString("Token");
+		user.address = obj.optString("Address");
+		user.city = obj.optString("City");
+		user.state = obj.optString("State");
+		user.zip = obj.optString("Zip");
 		user.distance = obj.optDouble("Distance");
 
 		JSONArray schedulesArray = obj.optJSONArray("Schedules");

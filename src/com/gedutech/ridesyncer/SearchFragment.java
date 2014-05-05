@@ -122,7 +122,7 @@ public class SearchFragment extends Fragment {
 				adapter.notifyDataSetChanged();
 			} else {
 				Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
-				Log.d("RideSyncer", result.getRaw());
+//				Log.d("RideSyncer", result.getRaw());
 			}
 		}
 

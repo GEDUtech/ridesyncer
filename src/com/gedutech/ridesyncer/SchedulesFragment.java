@@ -2,7 +2,6 @@ package com.gedutech.ridesyncer;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +23,10 @@ public class SchedulesFragment extends Fragment {
 
 		session = Session.getInstance(getActivity());
 		authUser = session.getAuthUser();
-
-		Log.d("RideSyncer", authUser.getSchedules().size() + " ");
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Log.d("RideSyncer", "onActivityCreated");
 		super.onActivityCreated(savedInstanceState);
 
 		adapter = new SchedulesAdapter(getActivity(), authUser.getSchedules());

@@ -1,5 +1,6 @@
 package com.gedutech.ridesyncer.models;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import org.json.JSONException;
@@ -7,12 +8,14 @@ import org.json.JSONObject;
 
 public class SyncUser {
 
-	long id;
-	long userId;
-	long syncId;
-	int status;
-	int order;
-	Date createdAt;
+	protected long id;
+	protected long userId;
+	protected long syncId;
+	protected int status;
+	protected int order;
+	protected Date createdAt;
+
+	protected User user;
 
 	public JSONObject toJSON() throws JSONException {
 		JSONObject obj = new JSONObject();
@@ -22,11 +25,12 @@ public class SyncUser {
 		obj.put("SyncId", this.syncId);
 		obj.put("Status", this.status);
 		obj.put("Order", this.order);
+		obj.put("User", user.toJSON());
 
 		return obj;
 	}
 
-	public static SyncUser fromJSON(JSONObject obj) throws JSONException {
+	public static SyncUser fromJSON(JSONObject obj) throws JSONException, ParseException {
 		SyncUser syncDay = new SyncUser();
 
 		syncDay.id = obj.getLong("Id");
@@ -34,6 +38,7 @@ public class SyncUser {
 		syncDay.syncId = obj.getLong("SyncId");
 		syncDay.status = obj.getInt("Status");
 		syncDay.order = obj.getInt("Order");
+		syncDay.user = User.fromJSON(obj.getJSONObject("User"));
 
 		return syncDay;
 	}
@@ -76,6 +81,14 @@ public class SyncUser {
 
 	public Date getCreatedAt() {
 		return createdAt;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

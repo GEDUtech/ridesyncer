@@ -8,14 +8,22 @@ import java.util.Date;
 public class TimeUtil {
 
 	public static final String TIME_FORMAT = "hh:mm:ss";
-	public static final String RFC3339_FORMAT = "yyyy-MM-dd'T'h:m:ssXXX";
+	public static final String RFC3339_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
 	public static SimpleDateFormat getFormatter(String format) {
 		return new SimpleDateFormat(format);
 	}
 
+	public static String format(Date date, String format) {
+		return getFormatter(format).format(date);
+	}
+
 	public static Date parseTime(String time) throws ParseException {
 		return getFormatter(TIME_FORMAT).parse(time);
+	}
+
+	public static String formatTime12(Date date) {
+		return getFormatter("hh:mma").format(date);
 	}
 
 	public static String formatTime(Date time) {
@@ -40,7 +48,7 @@ public class TimeUtil {
 
 	protected static String weekday(int weekday, String format) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.DAY_OF_WEEK, weekday);
+		calendar.set(Calendar.DAY_OF_WEEK, ++weekday);
 		return getFormatter(format).format(calendar.getTime());
 	}
 

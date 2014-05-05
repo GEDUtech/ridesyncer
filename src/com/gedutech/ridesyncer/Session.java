@@ -59,6 +59,7 @@ public class Session {
 				authUser = User.fromJSON(readJSON(AUTH_USER_KEY));
 			} catch (Exception e) {
 				Log.d("RideSyncer", "Failed to read auth user");
+				Log.d("RideSyncer", e.getMessage());
 			}
 		}
 		return authUser;
@@ -81,7 +82,7 @@ public class Session {
 
 	public boolean saveAuthUser() {
 		try {
-			Log.d("RideSyncer", authUser.toJSON().toString(4));
+//			Log.d("RideSyncer", authUser.toJSON().toString(4));
 			write(AUTH_USER_KEY, authUser.toJSON());
 		} catch (Exception e) {
 			Log.d("RideSyncer", "Failed to write auth user: " + e.getMessage());

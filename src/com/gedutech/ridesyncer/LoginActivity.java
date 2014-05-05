@@ -218,8 +218,6 @@ public class LoginActivity extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 
-			Log.d("RideSyncer", apiResult.getRaw());
-
 			if (apiResult.isSuccess()) {
 				try {
 					User user = User.fromJSON(apiResult.getData());

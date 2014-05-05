@@ -26,7 +26,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		session = Session.getInstance(this);
+		session = Session.getInstance(getApplicationContext());
 
 		if (!session.isLoggedIn()) {
 			startLoginActivity();
@@ -143,9 +143,11 @@ public class MainActivity extends FragmentActivity {
 		public CharSequence getPageTitle(int position) {
 			switch (position) {
 			case 0:
-				return "My Schedule";
+				return "Syncs";
 			case 1:
-				return "Search";
+				return "Schedules";
+			case 2:
+				return "Find Matches";
 			}
 			return null;
 		}
@@ -154,8 +156,10 @@ public class MainActivity extends FragmentActivity {
 		public Fragment getItem(int position) {
 			switch (position) {
 			case 0:
-				return new SchedulesFragment();
+				return new SyncsFragment();
 			case 1:
+				return new SchedulesFragment();
+			case 2:
 				return new SearchFragment();
 			}
 
@@ -164,7 +168,7 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return 2;
+			return 3;
 		}
 
 	}

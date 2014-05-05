@@ -1,6 +1,5 @@
 package com.gedutech.ridesyncer.models;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,31 +8,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User implements Serializable {
+public class User {
 
-	private static final long serialVersionUID = 1L;
+	protected long id;
+	protected String username;
+	protected String password;
+	protected String repeatPassword;
+	protected String firstName;
+	protected String lastName;
+	protected String email;
+	protected String token;
+	protected String ride;
+	protected String address;
+	protected String city;
+	protected String state;
+	protected String zip;
+	protected double distance;
+	protected boolean emailVerified;
+	protected boolean tos;
 
-	public long id;
-	String username;
-	String password;
-	String repeatPassword;
-	String firstName;
-	String lastName;
-	String email;
-	String token;
-	String ride;
-	String address;
-	String city;
-	String state;
-	String zip;
-	double distance;
-	boolean emailVerified;
-	boolean tos;
-
-	List<Schedule> schedules;
+	protected List<Schedule> schedules;
+	protected List<Sync> syncs;
 
 	public User() {
-		schedules = new ArrayList<Schedule>();
+		schedules = new ArrayList<>();
+		syncs = new ArrayList<>();
 	}
 
 	public JSONObject toJSON() throws JSONException {
@@ -59,12 +58,16 @@ public class User implements Serializable {
 		}
 
 		JSONArray schedulesArr = new JSONArray();
-
 		for (Schedule schedule : schedules) {
 			schedulesArr.put(schedule.toJSON());
 		}
-
 		obj.put("Schedules", schedulesArr);
+
+		JSONArray syncsArr = new JSONArray();
+		for (Sync sync : syncs) {
+			syncsArr.put(sync.toJSON());
+		}
+		obj.put("Syncs", syncsArr);
 
 		return obj;
 	}
@@ -90,6 +93,13 @@ public class User implements Serializable {
 		if (schedulesArray != null) {
 			for (int i = 0; i < schedulesArray.length(); i++) {
 				user.schedules.add(Schedule.fromJSON(schedulesArray.getJSONObject(i)));
+			}
+		}
+
+		JSONArray syncsArray = obj.optJSONArray("Syncs");
+		if (syncsArray != null) {
+			for (int i = 0; i < syncsArray.length(); i++) {
+				user.syncs.add(Sync.fromJSON(syncsArray.getJSONObject(i)));
 			}
 		}
 
@@ -232,6 +242,14 @@ public class User implements Serializable {
 
 	public void setSchedules(List<Schedule> s1s) {
 		this.schedules = s1s;
+	}
+
+	public List<Sync> getSyncs() {
+		return syncs;
+	}
+
+	public void setSyncs(List<Sync> syncs) {
+		this.syncs = syncs;
 	}
 
 }

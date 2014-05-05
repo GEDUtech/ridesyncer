@@ -1,13 +1,17 @@
 package com.gedutech.ridesyncer.models;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Sync {
+import com.gedutech.ridesyncer.utils.TimeUtil;
+
+public class Sync implements Comparable<Sync> {
 
 	long id;
 	Date createdAt;
@@ -23,6 +27,7 @@ public class Sync {
 
 		obj.put("Id", this.id);
 		obj.put("Weekday", this.weekday);
+		obj.put("CreatedAt", TimeUtil.formatRFC3339(createdAt));
 
 		JSONArray syncUsersArray = new JSONArray();
 		for (SyncUser syncUser : syncUsers) {
@@ -33,11 +38,12 @@ public class Sync {
 		return obj;
 	}
 
-	public static Sync fromJSON(JSONObject obj) throws JSONException {
+	public static Sync fromJSON(JSONObject obj) throws JSONException, ParseException {
 		Sync sync = new Sync();
 
 		sync.id = obj.getLong("Id");
 		sync.weekday = obj.getInt("Weekday");
+		sync.createdAt = TimeUtil.parseRFC3339(obj.getString("CreatedAt"));
 
 		JSONArray syncUsersArray = obj.getJSONArray("SyncUsers");
 		for (int i = 0; i < syncUsersArray.length(); i++) {
@@ -69,6 +75,46 @@ public class Sync {
 
 	public void setWeekday(int weekday) {
 		this.weekday = weekday;
+	}
+
+	@Override
+	public int compareTo(Sync another) {
+		if (weekday == another.weekday) {
+			return 0;
+		}
+		return weekday > another.weekday ? 1 : -1;
+	}
+
+	public Date earlistSchedule() {
+		Date earliest = null;
+		for (SyncUser syncUser : syncUsers) {
+			Schedule schedule = syncUser.getUser().getScheduleOnWeekday(weekday);
+			if (earliest == null || schedule.getStart().before(earliest)) {
+				earliest = schedule.getStart();
+			}
+		}
+		return earliest;
+	}
+
+	public Date latestSchedule() {
+		Date latest = null;
+		for (SyncUser syncUser : syncUsers) {
+			Schedule schedule = syncUser.getUser().getScheduleOnWeekday(weekday);
+			if (latest == null || schedule.getEnd().after(latest)) {
+				latest = schedule.getEnd();
+			}
+		}
+		return latest;
+	}
+
+	public List<SyncUser> getDrivers() {
+		List<SyncUser> drivers = new ArrayList<>();
+		for (SyncUser syncUser : syncUsers) {
+			if (syncUser.getOrder() > 0) {
+				drivers.add(syncUser);
+			}
+		}
+		return drivers;
 	}
 
 }

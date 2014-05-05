@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.gedutech.ridesyncer.models.User;
@@ -38,7 +38,7 @@ public class SyncsFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		ListView listView = (ListView) getView().findViewById(R.id.lstSyncs);
+		ExpandableListView listView = (ExpandableListView) getView().findViewById(R.id.lstSyncs);
 		adapter = new SyncsAdapter(getActivity(), authUser.getSyncs());
 		changeWeek();
 		listView.setAdapter(adapter);

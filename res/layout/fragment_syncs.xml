@@ -33,7 +33,7 @@
             android:text="4/16/2014 - 4/23/2014" />
     </RelativeLayout>
 
-    <ListView
+    <ExpandableListView
         android:id="@+id/lstSyncs"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

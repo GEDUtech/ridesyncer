@@ -4,6 +4,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.Weeks;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,48 +58,64 @@ public class SyncsAdapter extends ArrayAdapter<Sync> {
 		}
 
 		Sync sync = getItem(position);
-
 		SyncUser syncUser = getDriverForToday(sync);
 
 		vHolder.txtWeekday.setText(TimeUtil.shortWeekday(sync.getWeekday()));
-		vHolder.txtUsername.setText(syncUser.getUser().getUsername());
-		vHolder.txtName.setText(syncUser.getUser().getFirstName() + " " + syncUser.getUser().getLastName());
-
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(weekStart);
 		cal.set(Calendar.DAY_OF_WEEK, sync.getWeekday() + 1);
 
 		vHolder.txtDate.setText(TimeUtil.format(cal.getTime(), "MM/dd/yyyy"));
 
-		Date earliest = sync.earlistSchedule();
-		Date latest = sync.latestSchedule();
-		vHolder.txtTime.setText(TimeUtil.formatTime12(earliest) + " - " + TimeUtil.formatTime12(latest));
+		if (syncUser == null) {
+			vHolder.txtUsername.setText("-");
+			vHolder.txtName.setText("Sync not started yet");
+			vHolder.txtTime.setText("-");
+		} else {
+			vHolder.txtUsername.setText(syncUser.getUser().getUsername());
+			vHolder.txtName.setText(syncUser.getUser().getFirstName() + " " + syncUser.getUser().getLastName());
+
+			Date earliest = sync.earlistSchedule();
+			Date latest = sync.latestSchedule();
+			vHolder.txtTime.setText(TimeUtil.formatTime12(earliest) + " - " + TimeUtil.formatTime12(latest));
+		}
 
 		return convertView;
 	}
 
 	protected SyncUser getDriverForToday(Sync sync) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(weekStart);
+		cal.set(Calendar.DAY_OF_WEEK, sync.getWeekday() + 1);
+
+		if (cal.getTime().before(sync.getCreatedAt())) {
+			return null;
+		}
+
 		List<SyncUser> drivers = sync.getDrivers();
 		if (drivers.size() == 1) {
 			return drivers.get(0);
 		}
 
-		Calendar cal = Calendar.getInstance();
-
-		cal.setTime(weekStart);
-		int currentWeek = cal.get(Calendar.WEEK_OF_YEAR);
-
 		for (SyncUser syncUser : drivers) {
 			cal.setTime(sync.getCreatedAt());
 			cal.add(Calendar.WEEK_OF_YEAR, syncUser.getOrder() - 1);
-			int startWeek = cal.get(Calendar.WEEK_OF_YEAR);
+			int weeksDiff = weeksDiff(sync.getCreatedAt(), weekStart);
 
-			if ((currentWeek - startWeek) % drivers.size() == 0) {
+			if (weeksDiff < drivers.size()) {
+				if (syncUser.getOrder() == weeksDiff + 1) {
+					return syncUser;
+				}
+			} else if ((weeksDiff - syncUser.getOrder() + 1) % drivers.size() == 0) {
 				return syncUser;
 			}
 		}
 
 		return null;
+	}
+
+	protected int weeksDiff(Date d1, Date d2) {
+		return Weeks.weeksBetween(new DateTime(d1), new DateTime(d2)).getWeeks();
 	}
 
 	static class ViewHolder {

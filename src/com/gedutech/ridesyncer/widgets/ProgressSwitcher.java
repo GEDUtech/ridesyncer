@@ -5,15 +5,25 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
+import android.widget.TextView;
+
+import com.gedutech.ridesyncer.R;
 
 public class ProgressSwitcher {
 
 	protected View progressView;
 	protected View formView;
+	protected TextView txtStatus;
 
 	public ProgressSwitcher(View progressView, View formView) {
 		this.progressView = progressView;
 		this.formView = formView;
+
+		txtStatus = (TextView) progressView.findViewById(R.id.progress_status_message);
+	}
+
+	public void setStatusText(String text) {
+		txtStatus.setText(text);
 	}
 
 	/**
@@ -24,6 +34,8 @@ public class ProgressSwitcher {
 		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
 		// for very easy animations. If available, use these APIs to fade-in
 		// the progress spinner.
+
+		progressView.requestFocus();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
 			int shortAnimTime = formView.getResources().getInteger(android.R.integer.config_shortAnimTime);
 

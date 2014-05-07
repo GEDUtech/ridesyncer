@@ -50,19 +50,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true" >
+        android:layout_centerVertical="true"
+        android:visibility="gone" >
 
         <ImageButton
             android:id="@+id/directions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_action_directions" />
+            android:src="@drawable/ic_action_directions" />
 
         <ImageButton
             android:id="@+id/contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_action_chat" />
+            android:src="@drawable/ic_action_chat" />
     </LinearLayout>
 
 </RelativeLayout>

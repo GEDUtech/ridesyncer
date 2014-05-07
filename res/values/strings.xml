@@ -12,6 +12,9 @@
     <string name="password">Password</string>
     <string name="request_sync">Request Sync</string>
     <string name="syncing">Syncing&#8230;</string>
+    <string name="registering">Registering&#8230;</string>
+    <string name="note">Note</string>
+    <string name="verification_note">A verification code has been sent to the email you used to register.</string>
 
     <!-- input labels -->
     <string name="etfEmailAddress">Email Address:</string>
@@ -53,5 +56,7 @@
     <string name="error_password_mismatch">Passwords do not match</string>
     <string name="error_invalid_zip">Zip code must be 5 numbers</string>
     <string name="erro_incorrect_verification_code">Incorrect verification code</string>
+    <string name="error_username_taken">Username already taken</string>
+    <string name="error_email_taken">Email already taken</string>
 
 </resources>

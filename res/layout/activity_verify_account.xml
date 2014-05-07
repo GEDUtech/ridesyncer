@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@drawable/pattern_repeat"
     android:orientation="vertical"
@@ -10,18 +10,57 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.gedutech.ridesyncer.VerifyActivity" >
 
-    <EditText
-        android:id="@+id/etfVerify"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/etfValidation"
-        android:inputType="number" />
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/etfVerificationCode1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/threePounds"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/dash" />
+
+        <EditText
+            android:id="@+id/etfVerificationCode2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/threePounds"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="38dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/dash" />
+
+        <EditText
+            android:id="@+id/etfVerificationCode3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/threePounds"
+            android:inputType="number" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
-        android:layout_weight="1"
+        android:layout_weight="0.65"
         android:orientation="horizontal" >
 
         <TextView

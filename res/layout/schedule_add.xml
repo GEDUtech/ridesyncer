@@ -1,124 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/pattern_repeat"
+    android:fillViewport="true"
+    android:padding="10dp" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/etfStartDate"
-            android:textAppearance="?android:attr/textAppearance" />
-
-        <EditText
-            android:id="@+id/etfStartDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/defaultDate"
-            android:inputType="date" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/etfEndDate"
-            android:textAppearance="?android:attr/textAppearance" />
-
-        <EditText
-            android:id="@+id/etfEndDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/defaultDate"
-            android:inputType="date" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/etfStartTime"
-            android:textAppearance="?android:attr/textAppearance" />
-
-        <EditText
-            android:id="@+id/etfStartTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/defaultTime"
-            android:inputType="time" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/etfEndTime"
-            android:textAppearance="?android:attr/textAppearance" />
-
-        <EditText
-            android:id="@+id/etfEndTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/defaultTime"
-            android:inputType="time" />
+        android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btnAdd"
+            android:orientation="vertical" >
 
-            <CheckBox
-                android:id="@+id/checkBoxM"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chkbxM" />
+                android:text="@string/etfStartTime"
+                android:textAppearance="?android:attr/textAppearance" />
 
-            <CheckBox
-                android:id="@+id/checkBoxT"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/etfStartTime"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/chkbxT" />
+                android:layout_marginBottom="5dp"
+                android:cursorVisible="false"
+                android:focusableInTouchMode="false"
+                android:ems="12"
+                android:hint="@string/defaultTime"
+                android:inputType="time" />
 
-            <CheckBox
-                android:id="@+id/checkBoxW"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chkbxW" />
-            
-            <CheckBox
-                android:id="@+id/checkBoxTh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chkbxTh" />
-            
-            <CheckBox
-                android:id="@+id/checkBoxF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chkbxF" />
-            
-            <CheckBox
-                android:id="@+id/checkBoxSa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chkbxSa" />
-            
-            <CheckBox
-                android:id="@+id/checkBoxSu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chkbxSu" />
+                android:text="@string/etfEndTime"
+                android:textAppearance="?android:attr/textAppearance" />
 
+            <EditText
+                android:id="@+id/etfEndTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:cursorVisible="false"
+                android:ems="12"
+                android:focusableInTouchMode="false"
+                android:hint="@string/defaultTime"
+                android:inputType="time" />
+
+            <Spinner
+                android:id="@+id/spinnerWeekday"
+                android:spinnerMode="dialog"
+                android:prompt="@string/selectWeekday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            
         </LinearLayout>
-        
+
         <Button
             android:id="@+id/btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:text="@string/btnAdd" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </ScrollView>

@@ -1,9 +1,11 @@
 package com.gedutech.ridesyncer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
@@ -34,6 +36,15 @@ public class SchedulesFragment extends Fragment {
 		ListView listView = (ListView) getView().findViewById(R.id.lstSchedules);
 		listView.addHeaderView(header);
 		listView.setAdapter(adapter);
+		
+		getView().findViewById(R.id.btnAddSchedule).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override
@@ -41,6 +52,12 @@ public class SchedulesFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_schedules, container, false);
 		header = inflater.inflate(R.layout.schedules_list_view_header, null, false);
 		return view;
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		adapter.notifyDataSetChanged();
 	}
 
 }

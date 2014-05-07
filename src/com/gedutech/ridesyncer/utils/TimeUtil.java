@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class TimeUtil {
 
-	public static final String TIME_FORMAT = "hh:mm:ss";
+	public static final String TIME_FORMAT = "HH:mm:ss";
 	public static final String RFC3339_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
 	public static SimpleDateFormat getFormatter(String format) {

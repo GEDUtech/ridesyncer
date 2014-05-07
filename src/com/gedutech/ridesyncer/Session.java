@@ -40,6 +40,7 @@ public class Session {
 		this.context = context;
 		pref = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
 		matches = new ArrayList<>();
+		syncs = new ArrayList<>();
 	}
 
 	public static Session getInstance(Context context) {
@@ -82,7 +83,7 @@ public class Session {
 
 	public boolean saveAuthUser() {
 		try {
-//			Log.d("RideSyncer", authUser.toJSON().toString(4));
+			// Log.d("RideSyncer", authUser.toJSON().toString(4));
 			write(AUTH_USER_KEY, authUser.toJSON());
 		} catch (Exception e) {
 			Log.d("RideSyncer", "Failed to write auth user: " + e.getMessage());
@@ -107,6 +108,9 @@ public class Session {
 
 	public void logout() {
 		pref.edit().remove(IS_LOGGED_IN_KEY).commit();
+		matches.clear();
+		syncs.clear();
+		authUser = null;
 	}
 
 	public void setMatches(List<User> matches) {

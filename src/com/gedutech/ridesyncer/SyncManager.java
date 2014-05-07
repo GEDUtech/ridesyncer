@@ -19,12 +19,6 @@ public class SyncManager {
 
 	protected Map<Integer, Sync> syncs;
 
-	protected SyncUser newSyncUser(User user) {
-		SyncUser syncUser = new SyncUser();
-		syncUser.setuserId(user.getId());
-		return syncUser;
-	}
-
 	public SyncManager(User user, List<User> others) {
 		this.user = user;
 		this.others = others;
@@ -128,6 +122,13 @@ public class SyncManager {
 		DateFormatSymbols symbols = new DateFormatSymbols();
 		return shortFormat ? symbols.getShortWeekdays()[weekday + 1] : symbols.getWeekdays()[weekday + 1];
 	}
+	
+	public List<User> getAllUsers() {
+		List<User> users = new ArrayList<>(others.size() + 1);
+		users.add(user);
+		users.addAll(others);
+		return users;
+	}
 
 	public List<String> getHeaders() {
 		List<String> headers = new ArrayList<>();
@@ -138,5 +139,11 @@ public class SyncManager {
 		}
 
 		return headers;
+	}
+
+	protected SyncUser newSyncUser(User user) {
+		SyncUser syncUser = new SyncUser();
+		syncUser.setuserId(user.getId());
+		return syncUser;
 	}
 }

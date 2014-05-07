@@ -27,7 +27,9 @@ public class Sync implements Comparable<Sync> {
 
 		obj.put("Id", this.id);
 		obj.put("Weekday", this.weekday);
-		obj.put("CreatedAt", TimeUtil.formatRFC3339(createdAt));
+		if (createdAt != null) {
+			obj.put("CreatedAt", TimeUtil.formatRFC3339(createdAt));
+		}
 
 		JSONArray syncUsersArray = new JSONArray();
 		for (SyncUser syncUser : syncUsers) {

@@ -25,7 +25,10 @@ public class SyncUser {
 		obj.put("SyncId", this.syncId);
 		obj.put("Status", this.status);
 		obj.put("Order", this.order);
-		obj.put("User", user.toJSON());
+
+		if (user != null) {
+			obj.put("User", user.toJSON());
+		}
 
 		return obj;
 	}

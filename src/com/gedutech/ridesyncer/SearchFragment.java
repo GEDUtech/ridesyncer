@@ -73,8 +73,10 @@ public class SearchFragment extends Fragment {
 			}
 		});
 
-		mUserSearchTask = new UserSearchTask();
-		mUserSearchTask.execute();
+		if (session.getMatches().size() == 0) {
+			mUserSearchTask = new UserSearchTask();
+			mUserSearchTask.execute();
+		}
 	}
 
 	@Override
@@ -122,7 +124,7 @@ public class SearchFragment extends Fragment {
 				adapter.notifyDataSetChanged();
 			} else {
 				Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
-//				Log.d("RideSyncer", result.getRaw());
+				// Log.d("RideSyncer", result.getRaw());
 			}
 		}
 

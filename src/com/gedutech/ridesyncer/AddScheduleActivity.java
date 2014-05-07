@@ -74,7 +74,6 @@ public class AddScheduleActivity extends Activity {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-				Toast.makeText(getApplicationContext(), "Weekday index: " + pos, Toast.LENGTH_LONG).show();
 				daySelection = pos;
 				schedule.setWeekday(daySelection);
 			}
@@ -145,11 +144,10 @@ public class AddScheduleActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (schedule.getStart().before(schedule.getEnd())) {
-					Toast.makeText(getApplicationContext(), "" + schedule.getStart().toString() + " - " + schedule.getEnd().toString(), Toast.LENGTH_LONG).show();
 					attemptAddSchedule();
 				}
 				else 
-					Toast.makeText(getApplicationContext(), "" + schedule.getStart().toString() + " - " + schedule.getEnd().toString(), Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "Start time must be before end time", Toast.LENGTH_LONG).show();
 			}
 		});
 			

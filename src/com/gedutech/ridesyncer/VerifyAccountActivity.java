@@ -21,7 +21,9 @@ public class VerifyAccountActivity extends Activity {
 	private UserVerifyTask mVerifyTask = null;
 
 	// UI References
-	private EditText mVerify;
+	private EditText mVerify1;
+	private EditText mVerify2;
+	private EditText mVerify3;
 	private Button btnVerify;
 
 	private UsersApi usersApi;
@@ -36,7 +38,9 @@ public class VerifyAccountActivity extends Activity {
 		usersApi = new UsersApi(authUser.getToken());
 		setContentView(R.layout.activity_verify_account);
 
-		mVerify = (EditText) findViewById(R.id.etfVerify);
+		mVerify1 = (EditText) findViewById(R.id.etfVerificationCode1);
+		mVerify2 = (EditText) findViewById(R.id.etfVerificationCode2);
+		mVerify3 = (EditText) findViewById(R.id.etfVerificationCode3);
 		btnVerify = (Button) findViewById(R.id.btnVerify);
 		btnVerify.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -54,10 +58,10 @@ public class VerifyAccountActivity extends Activity {
 		boolean cancel = false;
 		View focusView = null;
 
-		String verificationCode = mVerify.getText().toString();
+		String verificationCode = mVerify1.getText().toString() + mVerify2.getText().toString() + mVerify3.getText().toString();
 		if (verificationCode.isEmpty()) {
 			cancel = true;
-			focusView = mVerify;
+			focusView = mVerify1;
 		}
 
 		if (cancel) {
@@ -100,7 +104,7 @@ public class VerifyAccountActivity extends Activity {
 					Log.d("RideSyncer", result.getRaw());
 				}
 			} else if (result.hasValidationErrors()) {
-				mVerify.setError(VerifyAccountActivity.this.getString(R.string.erro_incorrect_verification_code));
+				mVerify3.setError(VerifyAccountActivity.this.getString(R.string.erro_incorrect_verification_code));
 				Log.d("RideSyncer", result.getRaw());
 			} else {
 				Log.d("RideSyncer", result.getRaw());

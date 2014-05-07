@@ -1,5 +1,8 @@
 package com.gedutech.ridesyncer;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,6 +47,30 @@ public class MainActivity extends FragmentActivity {
 		}
 
 		setupViewPager();
+
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+			@Override
+			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+
+			}
+
+			@Override
+			public void onTabSelected(Tab tab, FragmentTransaction ft) {
+				pager.setCurrentItem(tab.getPosition(), true);
+			}
+
+			@Override
+			public void onTabReselected(Tab tab, FragmentTransaction ft) {
+
+			}
+		};
+
+		for (int i = 0; i < 3; i++) {
+			actionBar
+					.addTab(actionBar.newTab().setText(pager.getAdapter().getPageTitle(i)).setTabListener(tabListener));
+		}
 	}
 
 	protected void setupViewPager() {
@@ -96,7 +123,7 @@ public class MainActivity extends FragmentActivity {
 			@Override
 			public void onPageSelected(int position) {
 				getActionBar().setTitle(pager.getAdapter().getPageTitle(position));
-
+				getActionBar().setSelectedNavigationItem(position);
 			}
 
 			@Override

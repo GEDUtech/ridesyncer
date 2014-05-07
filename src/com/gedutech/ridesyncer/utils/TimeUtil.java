@@ -48,7 +48,7 @@ public class TimeUtil {
 
 	protected static String weekday(int weekday, String format) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.DAY_OF_WEEK, ++weekday);
+		calendar.set(Calendar.DAY_OF_WEEK, weekday);
 		return getFormatter(format).format(calendar.getTime());
 	}
 

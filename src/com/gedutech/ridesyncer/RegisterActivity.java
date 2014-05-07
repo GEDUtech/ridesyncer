@@ -1,11 +1,13 @@
 package com.gedutech.ridesyncer;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.gedutech.ridesyncer.api.ApiResult;
 import com.gedutech.ridesyncer.api.UsersApi;
 import com.gedutech.ridesyncer.models.User;
 import com.gedutech.ridesyncer.utils.Validation;
+import com.gedutech.ridesyncer.widgets.ProgressSwitcher;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -37,11 +39,16 @@ public class RegisterActivity extends Activity {
 
 	private UsersApi usersApi;
 
+	private ProgressSwitcher progressSwitcher;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		usersApi = new UsersApi();
 		setContentView(R.layout.activity_register);
+
+		progressSwitcher = new ProgressSwitcher(findViewById(R.id.progress), findViewById(R.id.register_form));
+		progressSwitcher.setStatusText(getString(R.string.registering));
 
 		mFirstNameView = (EditText) findViewById(R.id.etfFName);
 		mLastNameView = (EditText) findViewById(R.id.etfLName);
@@ -145,6 +152,7 @@ public class RegisterActivity extends Activity {
 		if (validation.hasErrors()) {
 			validation.getFocusView().requestFocus();
 		} else {
+			progressSwitcher.showProgress(true);
 			mRegisterTask = new UserRegisterTask();
 			mRegisterTask.execute(user);
 		}
@@ -174,10 +182,10 @@ public class RegisterActivity extends Activity {
 			return apiResult;
 		}
 
-		// Add onPostExecute method
 		@Override
 		protected void onPostExecute(ApiResult result) {
 			mRegisterTask = null;
+			progressSwitcher.showProgress(false);
 
 			Log.d("RideSyncer", result.getRaw());
 			Log.d("RideSyncer", "" + result.getStatusCode());
@@ -190,7 +198,20 @@ public class RegisterActivity extends Activity {
 					Log.d("RideSyncer", e.getMessage());
 				}
 			} else if (result.hasValidationErrors()) {
-				// Do something
+				try {
+					JSONObject fields = result.getData().getJSONObject("errors").getJSONObject("Fields");
+					Validation validation = new Validation(RegisterActivity.this);
+					if (fields.has("username")) {
+						validation.invalidate(mUsernameView, R.string.error_username_taken);
+					}
+					if (fields.has("email")) {
+						validation.invalidate(mEmailView, R.string.error_email_taken);
+					}
+
+					validation.getFocusView().requestFocus();
+				} catch (JSONException e) {
+					Toast.makeText(RegisterActivity.this, "Unexpected Problem", Toast.LENGTH_LONG).show();
+				}
 			} else {
 				Toast.makeText(RegisterActivity.this, "Unexpected Problem", Toast.LENGTH_LONG).show();
 			}
@@ -199,6 +220,7 @@ public class RegisterActivity extends Activity {
 		@Override
 		protected void onCancelled() {
 			mRegisterTask = null;
+			progressSwitcher.showProgress(false);
 		}
 	}
 }

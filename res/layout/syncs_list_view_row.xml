@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:minHeight="78dp"
     android:layout_height="wrap_content"
-    android:clickable="false"
-    android:focusable="false"
-    android:focusableInTouchMode="false"
+    android:background="@drawable/selectable_list_item"
     android:gravity="center"
+    android:minHeight="90dp"
     android:orientation="horizontal"
     android:paddingBottom="15dp"
-    android:paddingLeft="25dp"
+    android:paddingLeft="30dp"
     android:paddingRight="10dp"
     android:paddingTop="15dp" >
 
     <TextView
         android:id="@+id/weekday"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:background="@drawable/calendar_date_icon_blank"
         android:gravity="center"
+        android:lineSpacingExtra="6dp"
         android:text="Tue"
         android:textColor="@color/dark"
         android:textStyle="bold" />
@@ -61,7 +61,9 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
+            android:adjustViewBounds="true"
             android:background="@drawable/circle"
+            android:scaleType="centerCrop"
             android:src="@drawable/silhouette" />
     </RelativeLayout>
 
@@ -79,16 +81,26 @@
             android:gravity="center"
             android:text="05/04/14"
             android:textColor="@color/medium_blue"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/start_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="08:00AM"
+            android:textColor="@color/dark_blue"
             android:textSize="13sp" />
 
         <TextView
-            android:id="@+id/time"
+            android:id="@+id/end_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="08:00AM - 1:00PM"
+            android:text="11:00AM"
             android:textColor="@color/dark_blue"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
     </LinearLayout>
 
 </LinearLayout>

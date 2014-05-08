@@ -2,24 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/selectable_list_item"
     android:orientation="horizontal"
     android:paddingBottom="15dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="15dp" >
 
-    <TextView
-        android:id="@+id/txtWeekday"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/weekday" />
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/txtWeekday"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/calendar_date_icon_blank"
+            android:gravity="center"
+            android:lineSpacingExtra="6dp"
+            android:text="Mon"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txtStart"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/start" />
@@ -27,7 +37,7 @@
     <TextView
         android:id="@+id/txtEnd"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/end" />

@@ -109,6 +109,17 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 			convertView = infalInflater.inflate(R.layout.syncs_expanaded_list_row, null);
 		}
 
+		int pl = convertView.getPaddingLeft();
+		int pt = convertView.getPaddingTop();
+		int pr = convertView.getPaddingRight();
+		int pb = convertView.getPaddingBottom();
+		if (childPosition == 0) {
+			convertView.setBackgroundResource(R.drawable.child_list_row);
+		} else {
+			convertView.setBackgroundResource(R.color.white);
+		}
+		convertView.setPadding(pl, pt, pr, pb);
+
 		TextView txtUsername = (TextView) convertView.findViewById(R.id.username);
 		TextView txtName = (TextView) convertView.findViewById(R.id.name);
 
@@ -169,14 +180,16 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 		if (syncUser == null) {
 			vHolder.txtUsername.setText("-");
 			vHolder.txtName.setText("Sync not started yet");
-			vHolder.txtTime.setText("-");
+			vHolder.txtStartTime.setText("");
+			vHolder.txtEndTime.setText("");
 		} else {
 			vHolder.txtUsername.setText(syncUser.getUser().getUsername());
 			vHolder.txtName.setText(syncUser.getUser().getFirstName() + " " + syncUser.getUser().getLastName());
 
 			Date earliest = sync.earlistSchedule();
 			Date latest = sync.latestSchedule();
-			vHolder.txtTime.setText(TimeUtil.formatTime12(earliest) + " - " + TimeUtil.formatTime12(latest));
+			vHolder.txtStartTime.setText(TimeUtil.formatTime12(earliest));
+			vHolder.txtEndTime.setText(TimeUtil.formatTime12(latest));
 		}
 
 		return convertView;
@@ -198,14 +211,16 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 		TextView txtUsername;
 		TextView txtName;
 		TextView txtDate;
-		TextView txtTime;
+		TextView txtStartTime;
+		TextView txtEndTime;
 
 		public ViewHolder(View v) {
 			txtWeekday = (TextView) v.findViewById(R.id.weekday);
 			txtUsername = (TextView) v.findViewById(R.id.username);
 			txtName = (TextView) v.findViewById(R.id.name);
 			txtDate = (TextView) v.findViewById(R.id.date);
-			txtTime = (TextView) v.findViewById(R.id.time);
+			txtStartTime = (TextView) v.findViewById(R.id.start_time);
+			txtEndTime = (TextView) v.findViewById(R.id.end_time);
 
 			v.setTag(this);
 		}

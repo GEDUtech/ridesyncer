@@ -120,9 +120,9 @@ public class SyncManager {
 
 	public String weekdayLabel(int weekday, boolean shortFormat) {
 		DateFormatSymbols symbols = new DateFormatSymbols();
-		return shortFormat ? symbols.getShortWeekdays()[weekday + 1] : symbols.getWeekdays()[weekday + 1];
+		return shortFormat ? symbols.getShortWeekdays()[weekday] : symbols.getWeekdays()[weekday];
 	}
-	
+
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<>(others.size() + 1);
 		users.add(user);

@@ -44,32 +44,32 @@ public class SearchAdapter extends ArrayAdapter<User> {
 
 		vHolder.txtUsername.setText(user.getUsername());
 		vHolder.txtLocation.setText(user.getCity() + ", " + user.getState());
-		vHolder.txtDistance.setText(String.format("%.2f", user.getDistance()));
+		vHolder.txtDistance.setText(String.format("%.2f mi", user.getDistance()));
 
 		String weekdays = "";
 
 		for (Schedule schedule : user.getSchedules()) {
 			String weekday = "";
 			switch (schedule.getWeekday()) {
-			case 0:
+			case 1:
 				weekday = "Su";
 				break;
-			case 1:
+			case 2:
 				weekday = "M";
 				break;
-			case 2:
+			case 3:
 				weekday = "T";
 				break;
-			case 3:
+			case 4:
 				weekday = "W";
 				break;
-			case 4:
+			case 5:
 				weekday = "Th";
 				break;
-			case 5:
+			case 6:
 				weekday = "F";
 				break;
-			case 6:
+			case 7:
 				weekday = "S";
 				break;
 			}

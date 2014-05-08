@@ -58,7 +58,7 @@ public class MainActivity extends FragmentActivity {
 
 			@Override
 			public void onTabSelected(Tab tab, FragmentTransaction ft) {
-				pager.setCurrentItem(tab.getPosition(), true);
+				pager.setCurrentItem(tab.getPosition(), false);
 			}
 
 			@Override
@@ -122,7 +122,6 @@ public class MainActivity extends FragmentActivity {
 
 			@Override
 			public void onPageSelected(int position) {
-				getActionBar().setTitle(pager.getAdapter().getPageTitle(position));
 				getActionBar().setSelectedNavigationItem(position);
 			}
 

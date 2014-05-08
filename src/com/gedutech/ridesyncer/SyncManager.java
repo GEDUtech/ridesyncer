@@ -29,14 +29,21 @@ public class SyncManager {
 		for (Schedule schedule : user.getSchedules()) {
 			int weekday = schedule.getWeekday();
 
-			Sync sync = new Sync();
-			sync.setWeekday(weekday);
-			sync.getSyncUsers().add(newSyncUser(user));
-
+			Sync sync = getSync(weekday);
 			boolean addedWeekday = false;
 			for (User other : others) {
 				if (other.getScheduleOnWeekday(weekday) != null) {
-					sync.getSyncUsers().add(newSyncUser(other));
+					boolean found = false;
+					for (SyncUser syncUser : sync.getSyncUsers()) {
+						if (syncUser.getUserId() == other.getId()) {
+							found = true;
+							break;
+						}
+					}
+
+					if (!found) {
+						sync.getSyncUsers().add(newSyncUser(other));
+					}
 
 					if (!addedWeekday) {
 						weekdays.add(weekday);
@@ -48,6 +55,19 @@ public class SyncManager {
 				syncs.put(weekday, sync);
 			}
 		}
+	}
+
+	public Sync getSync(int weekday) {
+		for (Sync sync : user.getSyncs()) {
+			if (sync.getWeekday() == weekday) {
+				return sync;
+			}
+		}
+
+		Sync sync = new Sync();
+		sync.setWeekday(weekday);
+		sync.getSyncUsers().add(newSyncUser(user));
+		return sync;
 	}
 
 	public int numDriversOnWeekday(int weekday) {
@@ -114,7 +134,7 @@ public class SyncManager {
 		return weekdays;
 	}
 
-	public Map<Integer, Sync> getSync() {
+	public Map<Integer, Sync> getSyncs() {
 		return syncs;
 	}
 

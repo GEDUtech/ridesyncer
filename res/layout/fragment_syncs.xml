@@ -8,12 +8,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:background="@drawable/table_header"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp" >
 
         <ImageButton
             android:id="@+id/btnPrevWeek"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="6dp"
             android:src="@drawable/ic_action_previous_item" />
 
         <ImageButton
@@ -22,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:padding="6dp"
             android:src="@drawable/ic_action_next_item" />
 
         <TextView
@@ -30,13 +37,15 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="4/16/2014 - 4/23/2014" />
+            android:text="4/16/2014 - 4/23/2014"
+            android:textColor="@color/dark"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <ExpandableListView
         android:id="@+id/lstSyncs"
-        android:dividerHeight="1dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:dividerHeight="1dp" />
 
 </LinearLayout>

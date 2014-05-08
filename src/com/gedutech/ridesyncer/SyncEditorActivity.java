@@ -172,7 +172,7 @@ public class SyncEditorActivity extends Activity {
 		protected ApiResult doInBackground(Void... params) {
 			ApiResult result = null;
 			try {
-				result = syncsApi.create(new ArrayList<Sync>(syncManager.getSync().values()));
+				result = syncsApi.create(new ArrayList<Sync>(syncManager.getSyncs().values()));
 			} catch (JSONException e) {
 				progressSwitcher.showProgress(false);
 				cancel(true);

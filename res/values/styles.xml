@@ -1,6 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="RideSyncer" parent="@android:style/Theme.Holo.Light">
+    <style name="RideSyncer" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="android:editTextStyle">@style/RideSyncer.Widget.EditText</item>
         <item name="android:buttonStyle">@style/RideSyncer.Widget.Button</item>
         <item name="android:textViewStyle">@style/RideSyncer.Widget.TextView</item>
@@ -10,11 +10,18 @@
         <!-- action bar -->
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>
+        <item name="android:actionBarWidgetTheme">@style/MyActionBarWidget</item>
+    </style>
+
+    <style name="MyActionBarWidget" parent="android:Theme.Holo.Light">
+        <item name="android:popupMenuStyle">@android:style/Widget.Holo.Light.PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@android:style/Widget.Holo.Light.ListView.DropDown</item>
     </style>
 
     <!-- ActionBar styles -->
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@color/medium_blue</item>
+        <item name="android:actionDropDownStyle">@android:style/Widget.Holo.Spinner</item>
         <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
     </style>
 

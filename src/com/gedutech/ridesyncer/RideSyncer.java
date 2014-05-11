@@ -1,5 +1,7 @@
 package com.gedutech.ridesyncer;
 
+import java.lang.reflect.Field;
+
 import org.json.JSONException;
 
 import android.app.ActionBar;
@@ -18,9 +20,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
+import android.widget.TextView;
 
 import com.gedutech.ridesyncer.api.ApiResult;
 import com.gedutech.ridesyncer.api.UsersApi;
+import com.gedutech.ridesyncer.models.Sync;
+import com.gedutech.ridesyncer.models.SyncUser;
 import com.gedutech.ridesyncer.models.User;
 import com.gedutech.ridesyncer.utils.GcmUtil;
 
@@ -31,6 +37,8 @@ public class RideSyncer extends FragmentActivity {
 	private ViewPager pager;
 	private Session session;
 	private GcmUtil gcmUtil;
+	private MenuItem newSyncRequestsMenuItem;
+	private TextView txtNumSyncRequests;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -95,6 +103,16 @@ public class RideSyncer extends FragmentActivity {
 		for (int i = 0; i < 3; i++) {
 			actionBar
 					.addTab(actionBar.newTab().setText(pager.getAdapter().getPageTitle(i)).setTabListener(tabListener));
+		}
+
+		try {
+			ViewConfiguration config = ViewConfiguration.get(this);
+			Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+			if (menuKeyField != null) {
+				menuKeyField.setAccessible(true);
+				menuKeyField.setBoolean(config, false);
+			}
+		} catch (Exception ex) {
 		}
 	}
 
@@ -190,15 +208,35 @@ public class RideSyncer extends FragmentActivity {
 		finish();
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
+		newSyncRequestsMenuItem = menu.findItem(R.id.badge);
+		txtNumSyncRequests = (TextView) newSyncRequestsMenuItem.getActionView()
+				.findViewById(R.id.txt_num_sync_requests);
+
+		updateSyncRequestNotification();
+
 		return true;
+	}
+
+	protected void updateSyncRequestNotification() {
+		int num = 0;
+		for (Sync sync : authUser.getSyncs()) {
+			for (SyncUser syncUser : sync.getSyncUsers()) {
+				if (syncUser.getUserId() == authUser.getId() && syncUser.getStatus() == 0) {
+					num++;
+				}
+			}
+		}
+
+		txtNumSyncRequests.setText(num > 9 ? "9+" : num + "");
+		newSyncRequestsMenuItem.setVisible(num > 0);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.logout:
 			session.logout();

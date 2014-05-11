@@ -24,7 +24,7 @@ public class Session {
 
 	private static Session instance;
 
-	private static final String PREFERENCES_NAME = "RideSyncer";
+	public static final String PREFERENCES_NAME = "com.gedutech.ridesyncer";
 	private static final String AUTH_USER_KEY = "auth_user";
 	private static final String IS_LOGGED_IN_KEY = "is_logged_in";
 	private static final String SYNCS_KEY = "syncs";

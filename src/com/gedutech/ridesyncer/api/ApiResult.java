@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-public class ApiResult {
+public class ApiResult extends Object {
 
 	protected String contentType;
 
@@ -73,5 +73,10 @@ public class ApiResult {
 
 	public boolean isNetworkError() {
 		return statusCode == 0;
+	}
+
+	public String toString() {
+		return String.format("[StatusCode: %d]\n[Content-Type: %s]\n[Begin Body]%s[\\EndBody]", statusCode,
+				contentType, raw);
 	}
 }

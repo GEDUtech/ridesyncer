@@ -186,6 +186,8 @@ public class SyncEditorActivity extends Activity {
 			mCreateSyncTask = null;
 			progressSwitcher.showProgress(false);
 
+			Log.d("RideSyncer", result.toString());
+
 			if (result.isSuccess()) {
 				try {
 					JSONArray resultsArr = result.getData().getJSONArray("results");

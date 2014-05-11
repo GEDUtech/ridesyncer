@@ -34,6 +34,8 @@ public class LoginActivity extends Activity {
 	 */
 	private UserLoginTask mAuthTask = null;
 
+	public static final String TAG = "RideSyncer";
+
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
@@ -186,7 +188,7 @@ public class LoginActivity extends Activity {
 
 		Intent intent = new Intent();
 		if (user.isEmailVerified()) {
-			intent.setClass(this, MainActivity.class);
+			intent.setClass(this, RideSyncer.class);
 		} else {
 			intent.setClass(this, VerifyAccountActivity.class);
 		}

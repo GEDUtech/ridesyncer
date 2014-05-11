@@ -1,27 +1,36 @@
 package com.gedutech.ridesyncer;
 
+import org.json.JSONException;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.gedutech.ridesyncer.api.ApiResult;
+import com.gedutech.ridesyncer.api.UsersApi;
 import com.gedutech.ridesyncer.models.User;
+import com.gedutech.ridesyncer.utils.GcmUtil;
 
-public class MainActivity extends FragmentActivity {
+public class RideSyncer extends FragmentActivity {
 
+	private UsersApi usersApi;
 	private User authUser;
 	private ViewPager pager;
 	private Session session;
+	private GcmUtil gcmUtil;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -44,6 +53,22 @@ public class MainActivity extends FragmentActivity {
 
 		if (!checkAuthorization()) {
 			return;
+		}
+
+		usersApi = new UsersApi(authUser.getToken());
+		gcmUtil = new GcmUtil(this);
+		try {
+			if (gcmUtil.checkPlayServices()) {
+				String regid = gcmUtil.getRegistrationId(this);
+				Log.d("RideSyncer", "GCMID: " + regid);
+				if (regid.isEmpty()) {
+					new GcmRegisterTask().execute();
+				}
+			} else {
+				Log.i("RideSyncer", "No valid Google Play Services APK found.");
+			}
+		} catch (Exception e) {
+			Log.d("RideSyncer", e.getMessage());
 		}
 
 		setupViewPager();
@@ -71,6 +96,12 @@ public class MainActivity extends FragmentActivity {
 			actionBar
 					.addTab(actionBar.newTab().setText(pager.getAdapter().getPageTitle(i)).setTabListener(tabListener));
 		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
 	}
 
 	protected void setupViewPager() {
@@ -159,6 +190,25 @@ public class MainActivity extends FragmentActivity {
 		finish();
 	}
 
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.logout:
+			session.logout();
+			startLoginActivity();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	private class MainPagerAdapter extends FragmentPagerAdapter {
 
 		public MainPagerAdapter(FragmentManager fm) {
@@ -199,22 +249,46 @@ public class MainActivity extends FragmentActivity {
 
 	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu, menu);
-		return true;
+	private class GcmRegisterTask extends AsyncTask<Void, Void, String> {
+
+		@Override
+		protected String doInBackground(Void... arg0) {
+			String regid = "";
+			try {
+				regid = gcmUtil.register();
+			} catch (Exception e) {
+				Log.d("RideSyncer", "Error: " + e.getMessage());
+			}
+			return regid;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result.isEmpty()) {
+				return;
+			}
+			new SendGcmRegIdTask().execute();
+		}
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-		case R.id.logout:
-			session.logout();
-			startLoginActivity();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+	private class SendGcmRegIdTask extends AsyncTask<Void, Void, ApiResult> {
+
+		@Override
+		protected ApiResult doInBackground(Void... params) {
+			try {
+				return usersApi.registerGcm(gcmUtil.getRegId());
+			} catch (JSONException e) {
+				Log.d("RideSyncer", e.getMessage());
+			}
+			return null;
 		}
+
+		@Override
+		protected void onPostExecute(ApiResult result) {
+			if (!result.isSuccess()) {
+				Log.d("RideSyncer", result.toString());
+			}
+		}
+
 	}
 }

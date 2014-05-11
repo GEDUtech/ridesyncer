@@ -3,6 +3,8 @@ package com.gedutech.ridesyncer.api;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.gedutech.ridesyncer.models.User;
 
 public class UsersApi extends ApiBase {
@@ -30,6 +32,14 @@ public class UsersApi extends ApiBase {
 		JSONObject data = new JSONObject();
 		data.put("VerificationCode", verificationCode);
 		return this.execute(this.post("/verify"), data);
+	}
+
+	public ApiResult registerGcm(String regid) throws JSONException {
+		JSONObject data = new JSONObject();
+		data.put("GcmRegid", regid);
+		Log.d("RideSyncer", "RegId: " + regid);
+		Log.d("RideSyncer", "Data: " + data.toString(4));
+		return execute(post("/register_gcm"), data);
 	}
 
 	public ApiResult search() {

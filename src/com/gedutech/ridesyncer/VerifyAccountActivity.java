@@ -96,7 +96,7 @@ public class VerifyAccountActivity extends Activity {
 					Log.d("RideSyncer", "Success");
 					authUser.setEmailVerified(true);
 					session.saveAuthUser();
-					startActivity(new Intent(VerifyAccountActivity.this, MainActivity.class));
+					startActivity(new Intent(VerifyAccountActivity.this, RideSyncer.class));
 					finish();
 				} catch (Exception e) {
 					Toast.makeText(VerifyAccountActivity.this, "Unexpected Problem", Toast.LENGTH_LONG).show();

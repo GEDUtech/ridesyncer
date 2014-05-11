@@ -76,6 +76,8 @@ public class SearchFragment extends Fragment {
 		if (session.getMatches().size() == 0) {
 			mUserSearchTask = new UserSearchTask();
 			mUserSearchTask.execute();
+		} else {
+			adapter.notifyDataSetChanged();
 		}
 	}
 

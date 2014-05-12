@@ -2,19 +2,24 @@ package com.gedutech.ridesyncer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -64,11 +69,25 @@ public class SyncEditorActivity extends Activity {
 
 		others = new ArrayList<>();
 
-		for (long id : getIntent().getExtras().getLongArray("ids")) {
-			for (User user : session.getMatches()) {
-				if (user.getId() == id) {
-					others.add(user);
-					break;
+		if (getIntent().getExtras().getBoolean("edit", false)) {
+			Set<Long> idSet = new HashSet<>();
+			for (Sync sync : authUser.getSyncs()) {
+				for (SyncUser syncUser : sync.getSyncUsers()) {
+					if (syncUser.getUserId() != authUser.getId()) {
+						if (!idSet.contains(syncUser.getUserId())) {
+							others.add(syncUser.getUser());
+							idSet.add(syncUser.getUserId());
+						}
+					}
+				}
+			}
+		} else {
+			for (long id : getIntent().getExtras().getLongArray("ids")) {
+				for (User user : session.getMatches()) {
+					if (user.getId() == id) {
+						others.add(user);
+						break;
+					}
 				}
 			}
 		}
@@ -76,6 +95,19 @@ public class SyncEditorActivity extends Activity {
 		syncManager = new SyncManager(authUser, others);
 		makeHeader();
 		makeTable();
+
+		ActionBar ab = getActionBar();
+		ab.setDisplayHomeAsUpEnabled(true);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			NavUtils.navigateUpFromSameTask(this);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	protected void attemptCreateSync() {

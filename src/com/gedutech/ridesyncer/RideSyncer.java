@@ -212,10 +212,17 @@ public class RideSyncer extends FragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
-		newSyncRequestsMenuItem = menu.findItem(R.id.badge);
+		newSyncRequestsMenuItem = menu.findItem(R.id.new_sync_requests);
+		newSyncRequestsMenuItem.getActionView().setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), SyncReviewerActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+				startActivity(intent);
+			}
+		});
 		txtNumSyncRequests = (TextView) newSyncRequestsMenuItem.getActionView()
 				.findViewById(R.id.txt_num_sync_requests);
-
 		updateSyncRequestNotification();
 
 		return true;
@@ -238,13 +245,18 @@ public class RideSyncer extends FragmentActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.edit_syncs:
+			Intent intent = new Intent(getApplicationContext(), SyncEditorActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			intent.putExtra("edit", true);
+			startActivity(intent);
+			break;
 		case R.id.logout:
 			session.logout();
 			startLoginActivity();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+			break;
 		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private class MainPagerAdapter extends FragmentPagerAdapter {

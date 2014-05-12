@@ -1,11 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/badge"
+        android:id="@+id/new_sync_requests"
         android:actionLayout="@layout/new_sync_request_badge"
         android:showAsAction="always"
         android:title="New Sync Requests">
     </item>
+    <item
+        android:id="@+id/edit_syncs"
+        android:showAsAction="never"
+        android:title="@string/edit_syncs"/>
     <item
         android:id="@+id/logout"
         android:showAsAction="never"

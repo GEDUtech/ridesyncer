@@ -229,6 +229,8 @@ public class RideSyncer extends FragmentActivity {
 	}
 
 	protected void updateSyncRequestNotification() {
+		if (!session.isLoggedIn())
+			return;
 		int num = 0;
 		for (Sync sync : authUser.getSyncs()) {
 			for (SyncUser syncUser : sync.getSyncUsers()) {

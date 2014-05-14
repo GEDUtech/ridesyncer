@@ -223,4 +223,9 @@ public class RegisterActivity extends Activity {
 			progressSwitcher.showProgress(false);
 		}
 	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+	}
 }

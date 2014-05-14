@@ -1,8 +1,11 @@
 package com.gedutech.ridesyncer.widgets;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.joda.time.Weeks;
@@ -18,6 +21,7 @@ import com.gedutech.ridesyncer.R;
 import com.gedutech.ridesyncer.Session;
 import com.gedutech.ridesyncer.models.Sync;
 import com.gedutech.ridesyncer.models.SyncUser;
+import com.gedutech.ridesyncer.models.User;
 import com.gedutech.ridesyncer.utils.TimeUtil;
 
 public class SyncsAdapter extends BaseExpandableListAdapter {
@@ -30,11 +34,36 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 
 	protected List<Sync> syncs;
 
-	public SyncsAdapter(Context context, List<Sync> syncs) {
+	protected User authUser;
+
+	protected Map<Sync, List<SyncUser>> filtered;
+
+	public SyncsAdapter(Context context, List<Sync> syncs, User authUser) {
 		super();
 
 		this.context = context;
 		this.syncs = syncs;
+		this.authUser = authUser;
+		filter();
+	}
+
+	protected void filter() {
+		filtered = new HashMap<>();
+		for (Sync sync : syncs) {
+			List<SyncUser> syncUsers = new ArrayList<>(sync.getSyncUsers().size() - 1);
+			for (SyncUser syncUser : sync.getSyncUsers()) {
+				if (syncUser.getUserId() != authUser.getId()) {
+					syncUsers.add(syncUser);
+				}
+			}
+			filtered.put(sync, syncUsers);
+		}
+	}
+
+	@Override
+	public void notifyDataSetChanged() {
+		filter();
+		super.notifyDataSetChanged();
 	}
 
 	public Date getWeekStart() {
@@ -89,16 +118,6 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public SyncUser getChild(int groupPosition, int childPosition) {
-		return syncs.get(groupPosition).getSyncUsers().get(childPosition);
-	}
-
-	@Override
-	public long getChildId(int groupPosition, int childPosition) {
-		return getChild(groupPosition, childPosition).getId();
-	}
-
-	@Override
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 			ViewGroup parent) {
 
@@ -136,8 +155,18 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
+	public SyncUser getChild(int groupPosition, int childPosition) {
+		return filtered.get(getGroup(groupPosition)).get(childPosition);
+	}
+
+	@Override
+	public long getChildId(int groupPosition, int childPosition) {
+		return getChild(groupPosition, childPosition).getId();
+	}
+
+	@Override
 	public int getChildrenCount(int groupPosition) {
-		return getGroup(groupPosition).getSyncUsers().size();
+		return filtered.get(getGroup(groupPosition)).size();
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import com.gedutech.ridesyncer.utils.TimeUtil;
 
-public class Sync implements Comparable<Sync> {
+public class Sync implements Comparable<Sync>, Cloneable {
 
 	long id;
 	Date createdAt;
@@ -20,6 +20,16 @@ public class Sync implements Comparable<Sync> {
 
 	public Sync() {
 		syncUsers = new ArrayList<SyncUser>();
+	}
+
+	public Sync clone() {
+		Sync sync = new Sync();
+		sync.id = id;
+		sync.createdAt = createdAt;
+		sync.weekday = weekday;
+		sync.syncUsers = new ArrayList<>(syncUsers);
+
+		return sync;
 	}
 
 	public JSONObject toJSON() throws JSONException {

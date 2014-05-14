@@ -108,6 +108,7 @@ public class AddScheduleActivity extends Activity {
 								Date startDate = new Date();
 								startDate.setHours(hour);
 								startDate.setMinutes(min);
+								startDate.setSeconds(0);
 								schedule.setStart(startDate);
 							}
 						}, hour, min, false);
@@ -135,6 +136,7 @@ public class AddScheduleActivity extends Activity {
 								Date endDate = new Date();
 								endDate.setHours(hour);
 								endDate.setMinutes(min);
+								endDate.setSeconds(0);
 								schedule.setEnd(endDate);
 							}
 						}, hour, min, false);

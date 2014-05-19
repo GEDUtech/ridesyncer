@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gedutech.ridesyncer.R;
@@ -45,6 +46,24 @@ public class SearchAdapter extends ArrayAdapter<User> {
 		vHolder.txtUsername.setText(user.getUsername());
 		vHolder.txtLocation.setText(user.getCity() + ", " + user.getState());
 		vHolder.txtDistance.setText(String.format("%.2f mi", user.getDistance()));
+
+		switch ((int) user.getId()) {
+		case 6:
+			vHolder.imgProfilePic.setImageResource(R.drawable.diego);
+			break;
+		case 7:
+			vHolder.imgProfilePic.setImageResource(R.drawable.jesse);
+			break;
+		case 9:
+			vHolder.imgProfilePic.setImageResource(R.drawable.sam);
+			break;
+		case 5:
+			vHolder.imgProfilePic.setImageResource(R.drawable.tigran);
+			break;
+		default:
+			vHolder.imgProfilePic.setImageResource(R.drawable.silhouette);
+			break;
+		}
 
 		String weekdays = "";
 
@@ -88,12 +107,14 @@ public class SearchAdapter extends ArrayAdapter<User> {
 		protected TextView txtDistance;
 		protected TextView txtLocation;
 		protected TextView txtWeekdays;
+		protected ImageView imgProfilePic;
 
 		public ViewHolder(View v) {
 			txtUsername = (TextView) v.findViewById(R.id.username);
 			txtLocation = (TextView) v.findViewById(R.id.location);
 			txtDistance = (TextView) v.findViewById(R.id.distance);
 			txtWeekdays = (TextView) v.findViewById(R.id.weekdays);
+			imgProfilePic = (ImageView) v.findViewById(R.id.profilePic);
 
 			v.setTag(this);
 		}

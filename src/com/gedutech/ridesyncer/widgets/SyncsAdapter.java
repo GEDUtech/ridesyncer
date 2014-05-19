@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gedutech.ridesyncer.R;
@@ -122,9 +123,28 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 
 		TextView txtUsername = (TextView) convertView.findViewById(R.id.username);
 		TextView txtName = (TextView) convertView.findViewById(R.id.name);
+		ImageView imgProfilePic = (ImageView) convertView.findViewById(R.id.profilePic);
 
 		txtUsername.setText(syncUser.getUser().getUsername());
 		txtName.setText(syncUser.getUser().getFirstName() + " " + syncUser.getUser().getLastName());
+		
+		switch ((int) syncUser.getUserId()) {
+		case 6:
+			imgProfilePic.setImageResource(R.drawable.diego);
+			break;
+		case 7:
+			imgProfilePic.setImageResource(R.drawable.jesse);
+			break;
+		case 9:
+			imgProfilePic.setImageResource(R.drawable.sam);
+			break;
+		case 5:
+			imgProfilePic.setImageResource(R.drawable.tigran);
+			break;
+		default:
+			imgProfilePic.setImageResource(R.drawable.silhouette);
+			break;
+		}
 
 		if (Session.getInstance(context).getAuthUser().getId() == syncUser.getUserId()) {
 			convertView.findViewById(R.id.actions).setVisibility(View.GONE);
@@ -177,6 +197,24 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 
 		vHolder.txtDate.setText(TimeUtil.format(cal.getTime(), "MM/dd/yyyy"));
 
+		switch ((int) syncUser.getUserId()) {
+		case 6:
+			vHolder.imgProfilePic.setImageResource(R.drawable.diego);
+			break;
+		case 7:
+			vHolder.imgProfilePic.setImageResource(R.drawable.jesse);
+			break;
+		case 9:
+			vHolder.imgProfilePic.setImageResource(R.drawable.sam);
+			break;
+		case 5:
+			vHolder.imgProfilePic.setImageResource(R.drawable.tigran);
+			break;
+		default:
+			vHolder.imgProfilePic.setImageResource(R.drawable.silhouette);
+			break;
+		}
+
 		if (syncUser == null) {
 			vHolder.txtUsername.setText("-");
 			vHolder.txtName.setText("Sync not started yet");
@@ -213,6 +251,7 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 		TextView txtDate;
 		TextView txtStartTime;
 		TextView txtEndTime;
+		ImageView imgProfilePic;
 
 		public ViewHolder(View v) {
 			txtWeekday = (TextView) v.findViewById(R.id.weekday);
@@ -221,6 +260,7 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 			txtDate = (TextView) v.findViewById(R.id.date);
 			txtStartTime = (TextView) v.findViewById(R.id.start_time);
 			txtEndTime = (TextView) v.findViewById(R.id.end_time);
+			imgProfilePic = (ImageView) v.findViewById(R.id.profilePic);
 
 			v.setTag(this);
 		}

@@ -36,23 +36,13 @@
         android:orientation="vertical"
         android:paddingBottom="10dp" >
 
-        <LinearLayout
-            android:id="@+id/syncEditorHeader"
+        <ListView
+            android:id="@+id/lst_sync_editor"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/table_header"
-            android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp" >
-        </LinearLayout>
-
-        <TableLayout
-            android:id="@+id/sync_editor_table"
-            android:layout_width="match_parent"
-            android:stretchColumns="*"
             android:layout_height="0dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1" >
-        </TableLayout>
+        </ListView>
 
         <LinearLayout
             android:layout_width="match_parent"

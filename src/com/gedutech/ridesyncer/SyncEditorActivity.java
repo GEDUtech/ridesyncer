@@ -22,7 +22,10 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SpinnerAdapter;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +38,7 @@ import com.gedutech.ridesyncer.models.SyncUser;
 import com.gedutech.ridesyncer.models.User;
 import com.gedutech.ridesyncer.views.SyncEditorCell;
 import com.gedutech.ridesyncer.widgets.ProgressSwitcher;
+import com.gedutech.ridesyncer.widgets.SyncEditorAdapter;
 
 public class SyncEditorActivity extends Activity {
 
@@ -53,16 +57,19 @@ public class SyncEditorActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sync_editor);
 
-		progressSwitcher = new ProgressSwitcher(findViewById(R.id.syncRequestStatus), findViewById(R.id.syncEditorForm));
-		syncEditorTable = (ViewGroup) findViewById(R.id.sync_editor_table);
-
-		findViewById(R.id.btnRequestSync).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				attemptCreateSync();
-			}
-		});
-
+		// progressSwitcher = new
+		// ProgressSwitcher(findViewById(R.id.syncRequestStatus),
+		// findViewById(R.id.syncEditorForm));
+		// syncEditorTable = (ViewGroup) findViewById(R.id.sync_editor_table);
+		//
+		// findViewById(R.id.btnRequestSync).setOnClickListener(new
+		// View.OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// attemptCreateSync();
+		// }
+		// });
+		//
 		session = Session.getInstance(getApplicationContext());
 		authUser = session.getAuthUser();
 		syncsApi = new SyncsApi(authUser.getToken());
@@ -91,13 +98,32 @@ public class SyncEditorActivity extends Activity {
 				}
 			}
 		}
-
+		//
 		syncManager = new SyncManager(authUser, others);
-		makeHeader();
-		makeTable();
+
+		ListView lstView = (ListView) findViewById(R.id.lst_sync_editor);
+		
+		List<Sync> syncs = new ArrayList<>(syncManager.getSyncs().size());
+		for (Integer key : syncManager.getSyncs().keySet()) {
+			syncs.add(syncManager.getSyncs().get(key));
+		}
+		SyncEditorAdapter adapter = new SyncEditorAdapter(this, syncs, authUser);
 
 		ActionBar ab = getActionBar();
 		ab.setDisplayHomeAsUpEnabled(true);
+		ab.setDisplayShowTitleEnabled(false);
+		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+		SpinnerAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(ab.getThemedContext(),
+				R.array.sync_editor_action_list, android.R.layout.simple_spinner_dropdown_item);
+
+		ab.setListNavigationCallbacks(mSpinnerAdapter, new ActionBar.OnNavigationListener() {
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+
+				return false;
+			}
+		});
 	}
 
 	@Override
@@ -122,79 +148,6 @@ public class SyncEditorActivity extends Activity {
 			progressSwitcher.showProgress(true);
 		} catch (Exception e) {
 			Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	protected void makeHeader() {
-		ViewGroup header = (ViewGroup) findViewById(R.id.syncEditorHeader);
-		android.widget.LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT,
-				1f);
-
-		for (String title : syncManager.getHeaders()) {
-			TextView txtWeekday = new TextView(this);
-			txtWeekday.setLayoutParams(params);
-			txtWeekday.setText(title);
-			txtWeekday.setTextColor(getResources().getColor(R.color.dark));
-			txtWeekday.setTypeface(null, Typeface.BOLD);
-			txtWeekday.setGravity(Gravity.CENTER);
-			header.addView(txtWeekday);
-		}
-	}
-
-	Map<Integer, List<SyncEditorCell>> cells;
-
-	protected void makeTable() {
-		List<User> users = syncManager.getAllUsers();
-		List<Integer> weekdays = syncManager.getWeekdays();
-
-		cells = new HashMap<>();
-		for (int weekday : weekdays) {
-			cells.put(weekday, new ArrayList<SyncEditorCell>());
-		}
-
-		for (User user : users) {
-			TableRow row = new TableRow(this);
-			row.setPadding(10, 10, 10, 10);
-			row.setMinimumHeight(100);
-
-			TextView txtUsername = new TextView(this);
-			txtUsername.setText(user.getUsername());
-			LinearLayout.LayoutParams params = new TableRow.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f);
-			params.gravity = Gravity.CENTER;
-
-			txtUsername.setLayoutParams(params);
-			txtUsername.setGravity(Gravity.CENTER);
-			txtUsername.setTextColor(this.getResources().getColor(R.color.dark));
-			txtUsername.setTypeface(null, Typeface.BOLD);
-			row.addView(txtUsername);
-
-			for (final int weekday : weekdays) {
-				Schedule schedule = user.getScheduleOnWeekday(weekday);
-				View view;
-
-				if (schedule == null) {
-					view = new View(this);
-				} else {
-					final SyncUser syncUser = syncManager.getSyncUserForSchedule(schedule);
-					SyncEditorCell cell = new SyncEditorCell(this, syncManager, weekday, syncUser);
-					cell.setOnCellStateChangedListener(new SyncEditorCell.CellStateChangedListener() {
-						@Override
-						public void onStateChanged(SyncEditorCell cell) {
-							Log.d("RideSyncer", "Checked.. updating....");
-							for (SyncEditorCell otherCell : cells.get(weekday)) {
-								otherCell.update();
-							}
-						}
-					});
-
-					view = cell;
-					cells.get(weekday).add(cell);
-				}
-				view.setLayoutParams(params);
-				row.addView(view);
-			}
-
-			syncEditorTable.addView(row);
 		}
 	}
 

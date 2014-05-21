@@ -46,7 +46,7 @@ public class TimeUtil {
 		return weekday(weekday, "EEE");
 	}
 
-	protected static String weekday(int weekday, String format) {
+	public static String weekday(int weekday, String format) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DAY_OF_WEEK, weekday);
 		return getFormatter(format).format(calendar.getTime());

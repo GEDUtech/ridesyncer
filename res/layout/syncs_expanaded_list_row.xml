@@ -5,6 +5,7 @@
     android:layout_gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingBottom="10dp"
+    android:paddingLeft="32dp"
     android:paddingRight="30dp"
     android:paddingTop="10dp" >
 
@@ -34,13 +35,22 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/profilePic"
+        android:id="@+id/position"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="32dp"
         android:layout_marginRight="5dp"
+        android:src="@drawable/driver"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_toRightOf="@+id/position"
         android:adjustViewBounds="true"
         android:background="@drawable/circle"
         android:scaleType="centerCrop"

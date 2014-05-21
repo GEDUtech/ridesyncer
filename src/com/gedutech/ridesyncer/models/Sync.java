@@ -2,7 +2,9 @@ package com.gedutech.ridesyncer.models;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -16,6 +18,7 @@ public class Sync implements Comparable<Sync> {
 	long id;
 	Date createdAt;
 	int weekday;
+	long userId;
 	ArrayList<SyncUser> syncUsers;
 
 	public Sync() {
@@ -27,6 +30,7 @@ public class Sync implements Comparable<Sync> {
 
 		obj.put("Id", this.id);
 		obj.put("Weekday", this.weekday);
+		obj.put("UserId", this.userId);
 		if (createdAt != null) {
 			obj.put("CreatedAt", TimeUtil.formatRFC3339(createdAt));
 		}
@@ -45,6 +49,7 @@ public class Sync implements Comparable<Sync> {
 
 		sync.id = obj.getLong("Id");
 		sync.weekday = obj.getInt("Weekday");
+		sync.userId = obj.getLong("UserId");
 		sync.createdAt = TimeUtil.parseRFC3339(obj.getString("CreatedAt"));
 
 		JSONArray syncUsersArray = obj.getJSONArray("SyncUsers");
@@ -77,6 +82,14 @@ public class Sync implements Comparable<Sync> {
 
 	public void setWeekday(int weekday) {
 		this.weekday = weekday;
+	}
+	
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setWeekday(long userId) {
+		this.userId = userId;
 	}
 
 	@Override
@@ -117,6 +130,15 @@ public class Sync implements Comparable<Sync> {
 			}
 		}
 		return drivers;
+	}
+	
+	public HashSet<Long> getSyncUsersIdHashSet() {
+		List<Long> ids = new ArrayList<>(syncUsers.size());
+		for (SyncUser syncUser : syncUsers) {
+			ids.add(syncUser.getUserId());
+		}
+		Collections.sort(ids);
+		return new HashSet<Long>(ids);
 	}
 
 }

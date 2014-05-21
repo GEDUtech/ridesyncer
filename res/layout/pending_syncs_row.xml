@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="0dp"
+    android:paddingTop="15dp" >
+
+    <LinearLayout
+        android:id="@+id/linearl_weekdays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_toLeftOf="@+id/img_right_arrow"
+        android:background="@drawable/badge_info"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/txtWeekdaySun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Sun"
+            android:textColor="@color/dark_blue"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtWeekdayMon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Mon"
+            android:textColor="@color/dark_blue"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtWeekdayTue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Tue"
+            android:textColor="@color/dark_blue"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtWeekdayWed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Wed"
+            android:textColor="@color/dark_blue"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtWeekdayThu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Thu"
+            android:textColor="@color/dark_blue"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtWeekdayFri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Fri"
+            android:textColor="@color/dark_blue"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtWeekdaySat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Sat"
+            android:textColor="@color/dark_blue"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearl_weekdays"
+        android:layout_toLeftOf="@+id/img_right_arrow" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="Requested by:" />
+
+        <TextView
+            android:id="@+id/txt_requester"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="tigrang"
+            android:textColor="@color/blue" />
+
+        <TextView
+            android:id="@+id/txt_requested_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="5 min ago" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_right_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_action_next_item" />
+
+</RelativeLayout>

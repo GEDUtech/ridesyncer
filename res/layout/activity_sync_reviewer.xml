@@ -1,13 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="sync reviewer" />
+    <LinearLayout
+        android:id="@+id/pending"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/pattern_repeat"
+        android:orientation="vertical" >
 
-</LinearLayout>
+        <ListView
+            android:id="@+id/lst_pending_syncs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/appdis"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/pattern_repeat"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ExpandableListView
+            android:id="@+id/lst_approve_syncs"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="Decline" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="Accept" />
+        </LinearLayout>
+    </LinearLayout>
+
+</merge>

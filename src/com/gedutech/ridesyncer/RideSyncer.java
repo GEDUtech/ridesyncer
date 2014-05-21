@@ -1,7 +1,10 @@
 package com.gedutech.ridesyncer;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.ActionBar;
@@ -24,6 +27,7 @@ import android.view.ViewConfiguration;
 import android.widget.TextView;
 
 import com.gedutech.ridesyncer.api.ApiResult;
+import com.gedutech.ridesyncer.api.SyncsApi;
 import com.gedutech.ridesyncer.api.UsersApi;
 import com.gedutech.ridesyncer.models.Sync;
 import com.gedutech.ridesyncer.models.SyncUser;
@@ -32,17 +36,25 @@ import com.gedutech.ridesyncer.utils.GcmUtil;
 
 public class RideSyncer extends FragmentActivity {
 
+	private static User authUser;
+	private static Session session;
+
 	private UsersApi usersApi;
-	private User authUser;
 	private ViewPager pager;
-	private Session session;
 	private GcmUtil gcmUtil;
 	private MenuItem newSyncRequestsMenuItem;
 	private TextView txtNumSyncRequests;
 
+	private static RideSyncer instance;
+
+	public static void refreshSyncs() {
+		new FetchSyncsTask().execute();
+	}
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		instance = this;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
@@ -119,7 +131,7 @@ public class RideSyncer extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
+		new FetchSyncsTask().execute();
 	}
 
 	protected void setupViewPager() {
@@ -229,8 +241,10 @@ public class RideSyncer extends FragmentActivity {
 	}
 
 	protected void updateSyncRequestNotification() {
-		if (!session.isLoggedIn())
+		if (!session.isLoggedIn()) {
 			return;
+		}
+
 		int num = 0;
 		for (Sync sync : authUser.getSyncs()) {
 			for (SyncUser syncUser : sync.getSyncUsers()) {
@@ -299,6 +313,45 @@ public class RideSyncer extends FragmentActivity {
 			return 3;
 		}
 
+	}
+
+	private static class FetchSyncsTask extends AsyncTask<Void, Void, ApiResult> {
+
+		@Override
+		protected ApiResult doInBackground(Void... arg0) {
+			ApiResult result = null;
+			try {
+				SyncsApi api = new SyncsApi(authUser.getToken());
+				return api.getSyncs();
+			} catch (Exception e) {
+				Log.d("RideSyncer", "FetchSyncsTask Error: " + e.getMessage());
+			}
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(ApiResult result) {
+			if (result.isSuccess()) {
+				Log.d("RideSyncer", result.getRaw());
+				List<Sync> syncs = new ArrayList<>();
+				JSONArray syncsArr;
+				try {
+					syncsArr = result.getData().getJSONArray("results");
+					for (int i = 0; i < syncsArr.length(); i++) {
+						Log.d("RideSyncer", syncsArr.getJSONObject(i).toString(4));
+						syncs.add(Sync.fromJSON(syncsArr.getJSONObject(i)));
+					}
+					authUser.getSyncs().clear();
+					authUser.getSyncs().addAll(syncs);
+					session.saveAuthUser();
+					if (instance != null) {
+						instance.updateSyncRequestNotification();
+					}
+				} catch (Exception e) {
+
+				}
+			}
+		}
 	}
 
 	private class GcmRegisterTask extends AsyncTask<Void, Void, String> {

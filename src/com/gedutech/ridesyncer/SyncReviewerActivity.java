@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 
@@ -31,6 +33,8 @@ public class SyncReviewerActivity extends Activity {
 	PendingSyncsAdapter adapter;
 	ReviewSyncGroupAdapter adapter2;
 
+	Button btnAccept, btnDecline;
+
 	View v1, v2;
 
 	@Override
@@ -40,6 +44,16 @@ public class SyncReviewerActivity extends Activity {
 
 		v1 = findViewById(R.id.pending);
 		v2 = findViewById(R.id.appdis);
+
+		btnAccept = (Button) findViewById(R.id.btn_accept);
+		btnDecline = (Button) findViewById(R.id.btn_decline);
+
+		btnAccept.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
 
 		ActionBar ab = getActionBar();
 		ab.setDisplayHomeAsUpEnabled(true);

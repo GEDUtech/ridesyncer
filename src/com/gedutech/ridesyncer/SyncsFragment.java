@@ -36,6 +36,12 @@ public class SyncsFragment extends Fragment {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		adapter.notifyDataSetChanged();
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		ExpandableListView listView = (ExpandableListView) getView().findViewById(R.id.lstSyncs);

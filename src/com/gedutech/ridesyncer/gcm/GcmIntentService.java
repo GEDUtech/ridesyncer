@@ -35,6 +35,7 @@ public class GcmIntentService extends IntentService {
 			if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 				Log.i(TAG, "Received: " + extras.toString());
 				sendNotification("New sync request pending approval");
+				RideSyncer.refreshSyncs();
 			}
 		}
 		GcmBroadcastReceiver.completeWakefulIntent(intent);

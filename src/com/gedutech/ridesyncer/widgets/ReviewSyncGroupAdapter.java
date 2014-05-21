@@ -1,12 +1,5 @@
 package com.gedutech.ridesyncer.widgets;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import org.joda.time.DateTime;
-import org.joda.time.Weeks;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +65,7 @@ public class ReviewSyncGroupAdapter extends BaseExpandableListAdapter {
 		ImageView imgProfilePic = (ImageView) convertView.findViewById(R.id.profilePic);
 		ImageView imgPosition = (ImageView) convertView.findViewById(R.id.position);
 		imgPosition.setVisibility(View.VISIBLE);
-		if (syncUser.getOrder() == 0 || childPosition > 1) {
+		if (syncUser.getOrder() == 0) {
 			imgPosition.setImageResource(R.drawable.passenger);
 		} else {
 			imgPosition.setImageResource(R.drawable.driver);
@@ -80,7 +73,7 @@ public class ReviewSyncGroupAdapter extends BaseExpandableListAdapter {
 
 		txtUsername.setText(syncUser.getUser().getUsername());
 		txtName.setText(syncUser.getUser().getFirstName() + " " + syncUser.getUser().getLastName());
-		
+
 		switch ((int) syncUser.getUserId()) {
 		case 6:
 			imgProfilePic.setImageResource(R.drawable.diego);

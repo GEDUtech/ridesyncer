@@ -21,4 +21,8 @@ public class SyncsApi extends ApiBase {
 		return execute(post("/create"), syncsArray);
 	}
 
+	public ApiResult getSyncs() throws JSONException {
+		return execute(get("/index"));
+	}
+
 }

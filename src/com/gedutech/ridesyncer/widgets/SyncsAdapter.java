@@ -57,7 +57,7 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 	protected SyncUser getDriverForToday(Sync sync) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(weekStart);
-		cal.set(Calendar.DAY_OF_WEEK, sync.getWeekday() + 1);
+		cal.set(Calendar.DAY_OF_WEEK, sync.getWeekday());
 
 		if (cal.getTime().before(sync.getCreatedAt())) {
 			return null;
@@ -127,7 +127,7 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 
 		txtUsername.setText(syncUser.getUser().getUsername());
 		txtName.setText(syncUser.getUser().getFirstName() + " " + syncUser.getUser().getLastName());
-		
+
 		switch ((int) syncUser.getUserId()) {
 		case 6:
 			imgProfilePic.setImageResource(R.drawable.diego);
@@ -193,27 +193,9 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 		vHolder.txtWeekday.setText(TimeUtil.shortWeekday(sync.getWeekday()));
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(weekStart);
-		cal.set(Calendar.DAY_OF_WEEK, sync.getWeekday() + 1);
+		cal.set(Calendar.DAY_OF_WEEK, sync.getWeekday());
 
 		vHolder.txtDate.setText(TimeUtil.format(cal.getTime(), "MM/dd/yyyy"));
-
-		switch ((int) syncUser.getUserId()) {
-		case 6:
-			vHolder.imgProfilePic.setImageResource(R.drawable.diego);
-			break;
-		case 7:
-			vHolder.imgProfilePic.setImageResource(R.drawable.jesse);
-			break;
-		case 9:
-			vHolder.imgProfilePic.setImageResource(R.drawable.sam);
-			break;
-		case 5:
-			vHolder.imgProfilePic.setImageResource(R.drawable.tigran);
-			break;
-		default:
-			vHolder.imgProfilePic.setImageResource(R.drawable.silhouette);
-			break;
-		}
 
 		if (syncUser == null) {
 			vHolder.txtUsername.setText("-");
@@ -228,6 +210,24 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 			Date latest = sync.latestSchedule();
 			vHolder.txtStartTime.setText(TimeUtil.formatTime12(earliest));
 			vHolder.txtEndTime.setText(TimeUtil.formatTime12(latest));
+
+			switch ((int) syncUser.getUserId()) {
+			case 6:
+				vHolder.imgProfilePic.setImageResource(R.drawable.diego);
+				break;
+			case 7:
+				vHolder.imgProfilePic.setImageResource(R.drawable.jesse);
+				break;
+			case 9:
+				vHolder.imgProfilePic.setImageResource(R.drawable.sam);
+				break;
+			case 5:
+				vHolder.imgProfilePic.setImageResource(R.drawable.tigran);
+				break;
+			default:
+				vHolder.imgProfilePic.setImageResource(R.drawable.silhouette);
+				break;
+			}
 		}
 
 		return convertView;

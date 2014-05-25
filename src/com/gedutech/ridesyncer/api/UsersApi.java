@@ -45,5 +45,9 @@ public class UsersApi extends ApiBase {
 	public ApiResult search() {
 		return execute(get("/search"));
 	}
+	
+	public ApiResult profile(long id) {
+		return execute(get("/profile/" + id));
+	}
 
 }

@@ -241,7 +241,7 @@ public class RideSyncer extends FragmentActivity {
 	}
 
 	protected void updateSyncRequestNotification() {
-		if (!session.isLoggedIn()) {
+		if (!session.isLoggedIn() || authUser == null) {
 			return;
 		}
 

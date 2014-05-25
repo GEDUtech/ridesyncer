@@ -91,6 +91,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gedutech.ridesyncer.RideSyncer" />
         </activity>
+        <activity
+            android:name="com.gedutech.ridesyncer.ProfilesActivity"
+            android:label="Review Sync Requests"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gedutech.ridesyncer.RideSyncer" />
+        </activity>
     </application>
 
 </manifest>

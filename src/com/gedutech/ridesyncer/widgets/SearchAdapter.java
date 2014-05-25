@@ -3,13 +3,16 @@ package com.gedutech.ridesyncer.widgets;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gedutech.ridesyncer.ProfilesActivity;
 import com.gedutech.ridesyncer.R;
 import com.gedutech.ridesyncer.models.Schedule;
 import com.gedutech.ridesyncer.models.User;
@@ -41,11 +44,21 @@ public class SearchAdapter extends ArrayAdapter<User> {
 			vHolder = (ViewHolder) convertView.getTag();
 		}
 
-		User user = getItem(position);
+		final User user = getItem(position);
 
 		vHolder.txtUsername.setText(user.getUsername());
 		vHolder.txtLocation.setText(user.getCity() + ", " + user.getState());
 		vHolder.txtDistance.setText(String.format("%.2f mi", user.getDistance()));
+		
+		vHolder.imgProfilePic.setTag(user.getId());
+		vHolder.imgProfilePic.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getContext(), ProfilesActivity.class);
+				intent.putExtra("user_id", (long)v.getTag());
+				getContext().startActivity(intent);	
+			}
+		});
 
 		switch ((int) user.getId()) {
 		case 6:

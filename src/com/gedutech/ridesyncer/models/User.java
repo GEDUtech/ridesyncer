@@ -25,6 +25,10 @@ public class User {
 	protected String zip;
 	protected double distance;
 	protected boolean emailVerified;
+	protected String gender;
+	protected String favoriteGenre;
+	protected String major;
+	protected boolean smoker;
 	protected boolean tos;
 
 	protected List<Schedule> schedules;
@@ -52,6 +56,10 @@ public class User {
 		obj.put("City", this.city);
 		obj.put("State", this.state);
 		obj.put("Zip", this.zip);
+		obj.put("FavoriteGenre", this.favoriteGenre);
+		obj.put("Gender", this.gender);
+		obj.put("Smoker", this.smoker);
+		obj.put("Major", this.major);
 
 		if (!Double.isNaN(this.distance)) {
 			obj.put("Distance", this.distance);
@@ -88,6 +96,11 @@ public class User {
 		user.state = obj.optString("State");
 		user.zip = obj.optString("Zip");
 		user.distance = obj.optDouble("Distance");
+		
+		user.gender = obj.getString("Gender");
+		user.favoriteGenre = obj.getString("FavoriteGenre");
+		user.major = obj.getString("Major");
+		user.smoker = obj.getBoolean("Smoker");
 
 		JSONArray schedulesArray = obj.optJSONArray("Schedules");
 		if (schedulesArray != null) {
@@ -226,6 +239,38 @@ public class User {
 
 	public boolean isEmailVerified() {
 		return emailVerified;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getFavoriteGenre() {
+		return favoriteGenre;
+	}
+
+	public void setFavoriteGenre(String favoriteGenre) {
+		this.favoriteGenre = favoriteGenre;
+	}
+
+	public boolean isSmoker() {
+		return smoker;
+	}
+
+	public void setSmoker(boolean smoker) {
+		this.smoker = smoker;
+	}
+
+	public String getMajor() {
+		return major;
+	}
+
+	public void setMajor(String major) {
+		this.major = major;
 	}
 
 	public boolean isTos() {

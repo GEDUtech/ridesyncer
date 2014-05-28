@@ -45,7 +45,7 @@ public class SyncsFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		ExpandableListView listView = (ExpandableListView) getView().findViewById(R.id.lstSyncs);
-		adapter = new SyncsAdapter(getActivity(), authUser.getSyncs());
+		adapter = new SyncsAdapter(getActivity(), authUser.getSyncs(), authUser);
 		changeWeek();
 		listView.setAdapter(adapter);
 

@@ -8,9 +8,12 @@ import org.joda.time.DateTime;
 import org.joda.time.Weeks;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import com.gedutech.ridesyncer.R;
 import com.gedutech.ridesyncer.Session;
 import com.gedutech.ridesyncer.models.Sync;
 import com.gedutech.ridesyncer.models.SyncUser;
+import com.gedutech.ridesyncer.models.User;
 import com.gedutech.ridesyncer.utils.TimeUtil;
 
 public class SyncsAdapter extends BaseExpandableListAdapter {
@@ -30,12 +34,15 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 	protected Context context;
 
 	protected List<Sync> syncs;
+	
+	protected User authUser;
 
-	public SyncsAdapter(Context context, List<Sync> syncs) {
+	public SyncsAdapter(Context context, List<Sync> syncs, User authUser) {
 		super();
 
 		this.context = context;
 		this.syncs = syncs;
+		this.authUser = authUser;
 	}
 
 	public Date getWeekStart() {
@@ -146,11 +153,22 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 			break;
 		}
 
+		convertView.findViewById(R.id.contact).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", syncUser.getUser().getEmail(), null));
+				intent.putExtra(Intent.EXTRA_SUBJECT, "RydeSyncer");
+				context.startActivity(Intent.createChooser(intent, "Send email..."));
+			}
+		});
+
 		if (Session.getInstance(context).getAuthUser().getId() == syncUser.getUserId()) {
 			convertView.findViewById(R.id.actions).setVisibility(View.GONE);
 		} else {
 			convertView.findViewById(R.id.actions).setVisibility(View.VISIBLE);
 		}
+		
 
 		return convertView;
 	}

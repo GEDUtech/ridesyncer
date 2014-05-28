@@ -162,6 +162,20 @@ public class SyncsAdapter extends BaseExpandableListAdapter {
 				context.startActivity(Intent.createChooser(intent, "Send email..."));
 			}
 		});
+		
+		convertView.findViewById(R.id.directions).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				double lat = syncUser.getUser().getLatitude();
+				double lng = syncUser.getUser().getLongitude();
+				String name = syncUser.getUser().getFirstName();
+				String coordinates = lat + "," + lng;
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + coordinates + "(" + name + ")"));
+				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+				context.startActivity(intent);
+			}
+		});
 
 		if (Session.getInstance(context).getAuthUser().getId() == syncUser.getUserId()) {
 			convertView.findViewById(R.id.actions).setVisibility(View.GONE);

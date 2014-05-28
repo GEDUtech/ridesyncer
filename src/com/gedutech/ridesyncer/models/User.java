@@ -30,6 +30,8 @@ public class User {
 	protected String major;
 	protected boolean smoker;
 	protected boolean tos;
+	protected double latitude;
+	protected double longitude;
 
 	protected List<Schedule> schedules;
 	protected List<Sync> syncs;
@@ -76,6 +78,9 @@ public class User {
 			syncsArr.put(sync.toJSON());
 		}
 		obj.put("Syncs", syncsArr);
+		
+		obj.put("Lat", this.latitude);
+		obj.put("Lng", this.longitude);
 
 		return obj;
 	}
@@ -101,6 +106,8 @@ public class User {
 		user.favoriteGenre = obj.getString("FavoriteGenre");
 		user.major = obj.getString("Major");
 		user.smoker = obj.getBoolean("Smoker");
+		user.latitude = obj.getDouble("Lat");
+		user.longitude = obj.getDouble("Lng");
 
 		JSONArray schedulesArray = obj.optJSONArray("Schedules");
 		if (schedulesArray != null) {
@@ -295,6 +302,14 @@ public class User {
 
 	public void setSyncs(List<Sync> syncs) {
 		this.syncs = syncs;
+	}
+	
+	public double getLongitude() {
+		return longitude;
+	}
+	
+	public double getLatitude() {
+		return latitude;
 	}
 
 }
